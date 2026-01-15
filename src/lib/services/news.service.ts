@@ -19,7 +19,6 @@ const RSS_FEEDS: Record<string, string[]> = {
         'https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en',
         'https://finance.yahoo.com/news/rssindex',
         'http://feeds.bbci.co.uk/news/world/rss.xml',
-        'https://www.aljazeera.com/xml/rss/all.xml',
     ],
     crypto: [
         'https://www.coindesk.com/arc/outboundfeeds/rss/',
@@ -75,7 +74,6 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
                     if (lowerUrl.includes('google')) sourceName = 'Google News';
                     else if (lowerUrl.includes('yahoo')) sourceName = 'Yahoo Finance';
                     else if (lowerUrl.includes('bbci')) sourceName = 'BBC News';
-                    else if (lowerUrl.includes('aljazeera')) sourceName = 'Al Jazeera';
                     else if (lowerUrl.includes('coindesk')) sourceName = 'CoinDesk';
                     else if (lowerUrl.includes('cointelegraph')) sourceName = 'CoinTelegraph';
                     else if (lowerUrl.includes('techcrunch')) sourceName = 'TechCrunch';
