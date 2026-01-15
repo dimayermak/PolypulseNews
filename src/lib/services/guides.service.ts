@@ -3,7 +3,7 @@ export interface Guide {
     slug: string;
     title: string;
     description: string;
-    category: 'basics' | 'strategies' | 'platforms' | 'advanced';
+    category: 'Information' | 'Strategy' | 'Skill Building';
     content: string;
     imageUrl?: string;
     lastUpdated: string;
@@ -15,115 +15,104 @@ const GUIDES: Guide[] = [
     {
         id: '1',
         slug: 'intro-to-prediction-markets',
-        title: 'Ultimate Guide to Prediction Markets 101',
-        description: 'Learn how prediction markets work, why they are more accurate than polls, and how to start trading.',
-        category: 'basics',
-        readTime: '8 min',
-        author: 'Polypulse Research',
+        title: 'Instruction: The Mechanics of Information Aggegration',
+        description: 'A deep-dive into how prediction markets serve as the worlds most accurate truth machines.',
+        category: 'Information',
+        readTime: '12 min',
+        author: 'Polypulse Intelligence',
         lastUpdated: '2024-01-15',
-        imageUrl: 'https://images.unsplash.com/photo-1611974717528-587ad043d1b4?auto=format&fit=crop&q=80&w=1000',
+        imageUrl: 'https://images.unsplash.com/photo-1551288049-bbbda5366391?auto=format&fit=crop&q=80&w=1200',
         content: `
-            <h2>What are Prediction Markets?</h2>
-            <p>At their core, prediction markets are "information aggregators." Unlike traditional betting where you bet against a house, here you are trading against the collective wisdom of thousands of other participants. Every share price in a prediction market represents the collective probability of a future event occurring.</p>
+            <h2>The Science of Prediction</h2>
+            <p>At their core, prediction markets are decentralized information processors. While traditional polls measure what people <em>say</em> they will do, markets measure what they are willing to <em>risk</em>. This distinction is the foundation of market efficiency.</p>
             
-            <blockquote>"Prediction markets are the cleanest way to measure what the world actually thinks will happen."</blockquote>
+            <p><strong>Skin in the Game:</strong> In a prediction market, every participant is financially incentivized to be correct. This filters out "noise" and "virtue signaling," leaving only high-signal data points. When a trader buys a share, they are effectively publishing their private information to the public price.</p>
 
-            <h2>How the Math Works</h2>
-            <p>In most markets (like Polymarket or Kalshi), shares are priced between $0.00 and $1.00. If a "YES" share for an event is priced at $0.65, the market believes there is a 65% chance that event will occur. If you buy at $0.65 and the event happens, your share becomes worth $1.00. If it doesn't, it goes to $0.00.</p>
+            <h3>How Intelligence is Priced</h3>
+            <p>If an event is priced at 75¢, it means the collective intelligence of the market believes there is a 75% probability of that outcome. If you have superior information or a better model that says the probability is actually 85%, you have an "edge." Exploiting this edge is what drives the price toward the true probability.</p>
 
-            <h2>Why They Beat Traditional Polls</h2>
-            <ul>
-                <li><strong>Skin in the Game:</strong> Participants have a financial incentive to be right, not just to voice an opinion.</li>
-                <li><strong>Real-Time Updates:</strong> Prices adjust instantly to new information, whereas polls take days to conduct.</li>
-                <li><strong>No Social Bias:</strong> Anonymous trading removes the pressure to give "socially acceptable" answers.</li>
-            </ul>
+            <blockquote>"The price is the signal. The trade is the feedback loop."</blockquote>
+
+            <h3>The Oracle Problem</h3>
+            <p>The biggest challenge in prediction markets is the 'Oracle'—the mechanism that determines the actual outcome. Platforms like Polymarket use decentralized oracles (UMA) while Kalshi uses regulated third-party data. Understanding the settlement mechanism is as important as understanding the prediction itself.</p>
         `
     },
     {
         id: '2',
-        slug: 'polymarket-vs-kalshi',
-        title: 'Polymarket vs. Kalshi: Which Platform is Right for You?',
-        description: 'A deep comparison of the two giants in the prediction market space, covering liquidity, fees, and legality.',
-        category: 'platforms',
-        readTime: '12 min',
-        author: 'Polypulse Research',
-        lastUpdated: '2024-01-15',
-        imageUrl: 'https://images.unsplash.com/photo-1551288049-bbbda5366391?auto=format&fit=crop&q=80&w=1000',
+        slug: 'arbitrage-strategies',
+        title: 'Strategy: Advanced Cross-Platform Arbitrage',
+        description: 'Professional-grade battle plans for exploiting price discrepancies between Kalshi and Polymarket.',
+        category: 'Strategy',
+        readTime: '20 min',
+        author: 'Polypulse Intelligence',
+        lastUpdated: '2024-01-16',
+        imageUrl: 'https://images.unsplash.com/photo-1611974717528-587ad043d1b4?auto=format&fit=crop&q=80&w=1200',
         content: `
-            <h2>The Clash of the Titans</h2>
-            <p>If you want to trade on the future, you likely have two main options: <strong>Polymarket</strong> (Decentralized, Crypto-based) and <strong>Kalshi</strong> (Regulated, US-based). Understanding their differences is crucial for your trading strategy.</p>
+            <h2>The Arbitrage Opportunity</h2>
+            <p>Markets are rarely identical. Because Kalshi is a US-regulated exchange and Polymarket is a decentralized protocol, their participant pools differ significantly. This creates structural price gaps—Alpha.</p>
 
-            <h3>1. Regulation & Access</h3>
-            <p>Kalshi is the first legally regulated prediction market in the US. It is registered with the CFTC, meaning it follows strict federal guidelines. Polymarket, on the other hand, operates as a decentralized protocol on the Polygon blockchain, making it highly accessible world-wide but often restricted for US residents.</p>
+            <h3>1. The Spread Capture</h3>
+            <p>Suppose the 'Fed Interest Rate' market is at 80% on Kalshi and 76% on Polymarket. By buying 'NO' on Kalshi (pricing the event at 20%) and 'YES' on Polymarket (pricing it at 76%), you are essentially betting on the convergence of these two entities. If you size your positions correctly, you can create a risk-neutral profile where you profit regardless of the Fed decision.</p>
 
-            <h3>2. Currencies used</h3>
-            <p>Polymarket uses USDC (a stablecoin pegged to the Dollar), allowing for near-instant global settlements. Kalshi uses traditional US Dollars via bank transfers (ACH/Wire).</p>
+            <h3>2. Emotional Hedging</h3>
+            <p>Prediction markets allow you to hedge against "black swan" events in your life or portfolio. If you are heavily invested in Tech stocks, buying a 'Rate Hike' prediction share acts as a mathematical insurance policy. If rates rise and your stocks fall, your prediction shares payout.</p>
 
-            <h3>3. Market Breadth</h3>
-            <p>Polymarket's decentralized nature allows for a massive variety of markers, from "Will it rain in London tomorrow?" to "Who will win the Bitcoin ETF race?". Kalshi focuses heavily on highly regulated events like interest rates, economic data, and major political outcomes.</p>
+            <h3>Best Practices for Execution</h3>
+            <ul>
+                <li><strong>Liquidity Depth:</strong> Never enter an arbitrage trade without checking the order book depth first. Slippage can eat 100% of your expected spread.</li>
+                <li><strong>Gas & Fees:</strong> Factor in Polygon gas fees for Polymarket and withdrawal fees for Kalshi.</li>
+                <li><strong>Timing:</strong> Convergence often happens in the final 24 hours before an event. Patience is a skill.</li>
+            </ul>
         `
     },
     {
         id: '3',
-        slug: 'arbitrage-strategies',
-        title: 'Advanced Arbitrage in Prediction Markets',
-        description: 'How to profit from price discrepancies between different prediction platforms using professional techniques.',
-        category: 'strategies',
+        slug: 'liquidity-depth-mapping',
+        title: 'Skill Building: Mastery of Order Book Analysis',
+        description: 'How to map global liquidity flows to enter and exit large positions without slippage.',
+        category: 'Skill Building',
         readTime: '15 min',
-        author: 'Polypulse Research',
-        lastUpdated: '2024-01-14',
-        imageUrl: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=1000',
+        author: 'Polypulse Intelligence',
+        lastUpdated: '2024-01-16',
+        imageUrl: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=1200',
         content: `
-            <h2>Understanding Prediction Arbitrage</h2>
-            <p>Arbitrage occurs when the same event is priced differently across two platforms. For example, if Polymarket says a 70% chance of an event and Kalshi says 65%, there is a 5% spread that a disciplined trader can exploit.</p>
+            <h2>Level Up: Beyond the Price</h2>
+            <p>Intermediate traders look at the price. Professionals look at the <strong>Depth</strong>. The order book is a map of where people are willing to stand their ground.</p>
 
-            <h3>Cross-Platform Locking</h3>
-            <p>By buying "NO" on the overpriced platform and "YES" on the underpriced one, you can lock in a guaranteed profit regardless of the event's outcome. This is known as "Delta Neutral" trading in the professional finance world.</p>
+            <h3>The "Walls" of Resistance</h3>
+            <p>When you see a large 'Sell Wall' at 60¢, it indicates a major stakeholder or institution doesn't believe the price should rise further. Often, these walls are "fake"—designed to scare off small traders. Learning to identify 'Spoofing' is a critical skill for high-frequency prediction trading.</p>
 
-            <h3>Hedging with Real-World Markets</h3>
-            <p>Modern traders don't just trade one market against another; they hedge against traditional assets. If you bet on a "Bitcoin over 100k" prediction market, you might hedge that position by shorting BTC futures on a traditional exchange.</p>
+            <h3>Volume Profile Mapping</h3>
+            <p>High volume at a specific price point creates a "Value Area." If a price moves outside this area, it is likely to return unless there is a significant news catalyst. Use Polypulse Analytics to track where the 'Smart Money' is concentrating their buys.</p>
+
+            <blockquote>"In markets with thin liquidity, your exit is more important than your entry."</blockquote>
+
+            <h3>Exercises</h3>
+            <ol>
+                <li>Find a market with <$10k volume. Try to buy $500 worth of shares and observe the slippage.</li>
+                <li>Analyze the Polymarket vs. Kalshi volume split for the same event and identify which platform is the "Price Leader."</li>
+            </ol>
         `
     },
     {
         id: '4',
-        slug: 'psychology-of-betting',
-        title: 'The Psychology of Prediction Markets: Logic vs. Emotion',
-        description: 'Why money on the line creates better information than any opinion poll ever could.',
-        category: 'basics',
+        slug: 'market-psychology',
+        title: 'Strategy: Logic vs. Emotional Bias',
+        description: 'Training your mind to ignore social media noise and focus purely on data-driven signals.',
+        category: 'Strategy',
         readTime: '10 min',
-        author: 'Polypulse Research',
+        author: 'Polypulse Intelligence',
         lastUpdated: '2024-01-16',
-        imageUrl: 'https://images.unsplash.com/photo-1518186239717-2e9b1367ea9a?auto=format&fit=crop&q=80&w=1000',
+        imageUrl: 'https://images.unsplash.com/photo-1518186239717-2e9b1367ea9a?auto=format&fit=crop&q=80&w=1200',
         content: `
-            <h2>The "Truth Machine"</h2>
-            <p>Economists often call prediction markets "Truth Machines." But why? The secret lies in the psychological shift that occurs when an individual stands to lose capital. This is known as <strong>Skin in the Game</strong>.</p>
-            
-            <h3>Logic Over Loudness</h3>
-            <p>In a social media poll, the loudest voices win. In a prediction market, the most accurate voices win. If you have an emotional bias toward a political candidate but the data says they are losing, betting on them is simply a donation to the other side. Markets punish emotion and reward logic.</p>
+            <h2>The Psychology of the Trade</h2>
+            <p>Social media is a echo chamber. Prediction markets are a reality check. The most common mistake traders make is "Wishing"—betting on what they <em>want</em> to happen rather than what the <em>data</em> says will happen.</p>
 
-            <h3>The Wisdom of Crowds</h3>
-            <p>Sir Francis Galton famously discovered that the average guess of a crowd at a county fair regarding the weight of an ox was nearly perfect. Prediction markets apply this mathematically to everything from geopolitics to interest rates.</p>
-        `
-    },
-    {
-        id: '5',
-        slug: 'liquidity-and-slippage',
-        title: 'Liquidity Analysis: Avoiding Slippage in Prediction Trades',
-        description: 'How to use volume mapping to enter and exit positions without moving the market price.',
-        category: 'advanced',
-        readTime: '18 min',
-        author: 'Polypulse Research',
-        lastUpdated: '2024-01-16',
-        imageUrl: 'https://images.unsplash.com/photo-1551288049-bbbda5366391?auto=format&fit=crop&q=80&w=1000',
-        content: `
-            <h2>Understanding the Order Book</h2>
-            <p>For professional traders, the price is only half the story. The other half is <strong>Liquidity</strong>. If you want to bet $10,000 on an event with only $500 in the order book, you will experience "Slippage"—meaning you will get a much worse price than what is displayed.</p>
+            <h3>Confirmation Bias</h3>
+            <p>If you only read news sources that support your worldview, you are at a massive disadvantage. Prediction markets force you to put a price on your beliefs. If your belief is wrong, the market will take your money. This is the ultimate behavioral correction.</p>
 
-            <h3>Spotting "Thin" Markets</h3>
-            <p>Using Polypulse's Analytics, you can see the volume split between platforms. A market might be priced at 60% on Polymarket but have no depth, while being 62% on Kalshi with millions in liquidity. The smart trade is often the 62% because it allows for a cleaner exit.</p>
-
-            <h3>The Impact of Sentiment Shocks</h3>
-            <p>When a news event breaks (e.g., a Fed announcement), liquidity often "dries up" instantly as market makers pull their orders to avoid being picked off. Learning to wait for liquidity to return is a hallmark of a professional trader.</p>
+            <h3>Best Practices: The "Anti-Thesis" Method</h3>
+            <p>For every trade you make, you should be able to write down three strong reasons why you might be wrong. If you cannot do this, you are trading on emotion, not intelligence.</p>
         `
     }
 ];

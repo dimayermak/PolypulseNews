@@ -61,7 +61,7 @@ export default function GuideDetailPage() {
                     <h2 className="text-2xl font-bold">Guide Not Found</h2>
                     <p className="text-muted">The lesson you're looking for might have been relocated or updated.</p>
                     <Link href="/guides">
-                        <Button variant="outline">Browse Academy</Button>
+                        <Button variant="outline">Browse Playbook</Button>
                     </Link>
                 </div>
             </div>
@@ -78,7 +78,7 @@ export default function GuideDetailPage() {
                     <div className="flex items-center gap-2 text-xs font-mono text-muted mb-8 group">
                         <Link href="/guides" className="hover:text-primary transition-colors flex items-center gap-2">
                             <BookOpen className="w-3 h-3" />
-                            ACADEMY
+                            PLAYBOOK
                         </Link>
                         <ChevronRight className="w-3 h-3" />
                         <span className="text-primary">{guide.category.toUpperCase()}</span>

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getTrendingNews } from '@/lib/services/news.service';
+import { getNewsItemById } from '@/lib/services/news.service';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,11 +9,7 @@ export async function GET(
 ) {
     try {
         const id = context.params.id;
-
-        // We optimize by fetching trending news and finding the item by ID
-        // In a real production app, we would cache individual items or use a DB
-        const newsItems = await getTrendingNews('all');
-        const newsItem = newsItems.find((item: any) => item.id === id);
+        const newsItem = await getNewsItemById(id);
 
         if (!newsItem) {
             return NextResponse.json(

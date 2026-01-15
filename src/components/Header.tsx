@@ -32,7 +32,7 @@ export function Header() {
                             Analytics
                         </Link>
                         <Link href="/guides" className="px-4 py-2 font-mono text-sm uppercase tracking-wider text-muted hover:text-primary transition-colors">
-                            Academy
+                            Playbook
                         </Link>
                     </nav>
 

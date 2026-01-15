@@ -35,48 +35,50 @@ export default function GuidesPage() {
                     {/* Hero Header */}
                     <div className="text-center space-y-6">
                         <Badge variant="glow" pulse className="mx-auto">
-                            Master the Markets
+                            Intelligence Playbook
                         </Badge>
                         <h1 className="text-4xl md:text-6xl font-bold font-heading">
-                            The Polypulse <span className="gradient-text">Academy</span>
+                            The Polypulse <span className="gradient-text">Playbook</span>
                         </h1>
                         <p className="text-xl text-muted max-w-2xl mx-auto leading-relaxed">
-                            Deep-dives, data-driven strategies, and platform guides to transform you into a professional prediction market analyst.
+                            Deep-dives, strategy guides, and best practices to transform you into a professional prediction market analyst.
                         </p>
                     </div>
 
                     {/* Featured Sections */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <Card glass className="p-8 space-y-4 border-primary/20">
-                            <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
-                                <Zap className="w-6 h-6 text-primary" />
+                        <Card glass className="p-8 space-y-4 border-white/10">
+                            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                                <BookOpen className="w-6 h-6 text-muted" />
                             </div>
-                            <h3 className="text-xl font-bold">Quick Start</h3>
-                            <p className="text-sm text-muted">Go from zero to your first trade in under 5 minutes with our platform onboarding.</p>
+                            <h3 className="text-xl font-bold">Instruction & Information</h3>
+                            <p className="text-sm text-muted">Core foundations and data-rich explanations of how global prediction markets operate.</p>
                         </Card>
-                        <Card glass className="p-8 space-y-4 border-tertiary/20">
-                            <div className="w-12 h-12 rounded-xl bg-tertiary/20 flex items-center justify-center">
-                                <Award className="w-6 h-6 text-tertiary" />
+                        <Card glass className="p-6 md:p-10 space-y-5 border-primary/40 bg-primary/5 scale-105 shadow-glow-orange-sm">
+                            <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/50">
+                                <Zap className="w-7 h-7 text-primary" />
                             </div>
-                            <h3 className="text-xl font-bold">Alpha Strategies</h3>
-                            <p className="text-sm text-muted">Learn professional arbitrage and hedging techniques used by hedge funds.</p>
+                            <div className="space-y-2">
+                                <h3 className="text-2xl font-bold">Strategy & Best Practices</h3>
+                                <p className="text-sm text-white/80 leading-relaxed font-medium">Professional-grade battle plans for navigating market volatility and high-volume events.</p>
+                            </div>
                         </Card>
-                        <Card glass className="p-8 space-y-4 border-cyan-500/20">
-                            <div className="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center">
-                                <BookOpen className="w-6 h-6 text-cyan-500" />
+                        <Card glass className="p-8 space-y-4 border-white/10">
+                            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                                <Star className="w-6 h-6 text-muted" />
                             </div>
-                            <h3 className="text-xl font-bold">Deep Theory</h3>
-                            <p className="text-sm text-muted">Understand the information aggregation theory behind why prediction markets work.</p>
+                            <h3 className="text-xl font-bold">Skill Building</h3>
+                            <p className="text-sm text-muted">Hands-on exercises and advanced mental models to level up your analytical capabilities.</p>
                         </Card>
                     </div>
 
                     {/* Guides Grid */}
                     <div className="space-y-8">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-2xl font-bold">Latest Lessons</h2>
+                            <h2 className="text-2xl font-bold">Latest Intelligence</h2>
                             <div className="flex gap-2">
-                                <Badge variant="secondary">All Basics</Badge>
-                                <Badge variant="outline">Advanced</Badge>
+                                <Badge variant="secondary">Basics</Badge>
+                                <Badge variant="outline">Advanced Strategy</Badge>
                             </div>
                         </div>
 

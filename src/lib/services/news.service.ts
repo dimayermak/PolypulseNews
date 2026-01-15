@@ -2,14 +2,17 @@ import Parser from 'rss-parser';
 import NodeCache from 'node-cache';
 
 const cache = new NodeCache({ stdTTL: 600 }); // 10 minute cache
+const globalArticleCache = new NodeCache({ stdTTL: 3600 }); // 1 hour persistent cache for individual items
 const parser = new Parser();
 
 export interface NewsItem {
+    id: string;
     title: string;
     link: string;
     source: string;
     pubDate: string;
     description?: string;
+    content?: string;
     imageUrl?: string;
     isSponsored?: boolean;
 }
@@ -145,7 +148,8 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
                 // 4. Content/Description Regex (often higher quality)
                 const htmlSearch = (item.content || '') + (item['content:encoded'] || '') + (item.description || '') + (item.contentSnippet || '');
                 if (!imageUrl || imageUrl.includes('spacer') || imageUrl.length < 20) {
-                    const imgMatch = htmlSearch.match(/<img[^>]+src="([^">]+)"/i);
+                    // More robust img regex matching src with single or double quotes
+                    const imgMatch = htmlSearch.match(/<img[^>]+src=["']([^"']+)["']/i);
                     if (imgMatch && !imgMatch[1].includes('feedburner') && !imgMatch[1].includes('doubleclick')) {
                         imageUrl = imgMatch[1];
                     }
@@ -160,7 +164,7 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
                     link: item.link || '',
                     source: item._sourceName || item.source?.name || 'News',
                     pubDate: item.pubDate || new Date().toISOString(),
-                    description: (item.contentSnippet || item.content || '').replace(/<[^>]*>/g, '').slice(0, 200) + '...',
+                    description: (item.contentSnippet || item.content || '').replace(/<[^>]*>/g, '').trim().slice(0, 200) + '...',
                     content: item.content || item['content:encoded'] || item.contentSnippet || '',
                     imageUrl,
                 } as NewsItem;
@@ -175,6 +179,12 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
             .slice(0, 40);
 
         cache.set(cacheKey, newsItems);
+
+        // Populate global article cache for direct retrieval
+        newsItems.forEach(item => {
+            globalArticleCache.set(item.id, item);
+        });
+
         return newsItems;
     } catch (error: any) {
         console.error(`Error fetching news for ${query}:`, error.message);
@@ -213,4 +223,26 @@ export async function getTrendingNews(category?: string): Promise<NewsItem[]> {
         : 'market finance crypto news';
 
     return getNewsForQuery(query);
+}
+
+export async function getNewsItemById(id: string): Promise<NewsItem | undefined> {
+    // 1. Check global cache first (most reliable)
+    const cached = globalArticleCache.get(id);
+    if (cached) return cached as NewsItem;
+
+    // 2. If not found, try to find in trending cache
+    const categories = ['all', 'politics', 'sports', 'economics', 'crypto', 'technology', 'entertainment'];
+    for (const cat of categories) {
+        const catCacheKey = `news_latest_${cat}`;
+        const catNews = cache.get(catCacheKey) as NewsItem[];
+        if (catNews) {
+            const item = catNews.find(n => n.id === id);
+            if (item) {
+                globalArticleCache.set(id, item); // Refill global cache
+                return item;
+            }
+        }
+    }
+
+    return undefined;
 }
