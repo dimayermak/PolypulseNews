@@ -1,9 +1,14 @@
 import Parser from 'rss-parser';
 import NodeCache from 'node-cache';
+import crypto from 'crypto';
 
 const cache = new NodeCache({ stdTTL: 600 }); // 10 minute cache
 const globalArticleCache = new NodeCache({ stdTTL: 3600 }); // 1 hour persistent cache for individual items
 const parser = new Parser();
+
+function generateId(text: string): string {
+    return crypto.createHash('md5').update(text).digest('hex').slice(0, 16);
+}
 
 export interface NewsItem {
     id: string;
@@ -159,7 +164,7 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
                 if (imageUrl && imageUrl.startsWith('//')) imageUrl = 'https:' + imageUrl;
 
                 return {
-                    id: Buffer.from(item.link || item.title || '').toString('base64').slice(0, 16),
+                    id: generateId(item.link || item.title || ''),
                     title: item.title || '',
                     link: item.link || '',
                     source: item._sourceName || item.source?.name || 'News',
@@ -243,6 +248,11 @@ export async function getNewsItemById(id: string): Promise<NewsItem | undefined>
             }
         }
     }
+
+    // 3. Last ditch effort: refresh trending and check again
+    const news = await getTrendingNews('all');
+    const item = news.find(n => n.id === id);
+    if (item) return item;
 
     return undefined;
 }
