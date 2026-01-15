@@ -12,8 +12,8 @@ export async function GET(
 
         // We optimize by fetching trending news and finding the item by ID
         // In a real production app, we would cache individual items or use a DB
-        const response = await getTrendingNews('all');
-        const newsItem = response.news.find((item: any) => item.id === id);
+        const newsItems = await getTrendingNews('all');
+        const newsItem = newsItems.find((item: any) => item.id === id);
 
         if (!newsItem) {
             return NextResponse.json(
