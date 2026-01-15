@@ -88,28 +88,34 @@ export default function NewsContent() {
 
             <section className="sticky top-16 z-40 bg-background/95 backdrop-blur-lg border-b border-white/10">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                    <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                        <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide w-full md:w-auto">
+                    <div className="flex flex-col gap-6">
+                        {/* Category Filter */}
+                        <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide w-full pb-1">
                             {categories.map((category) => (
                                 <button
                                     key={category.value}
                                     onClick={() => setSelectedCategory(category.value)}
-                                    className={`px-5 py-2.5 rounded-full font-mono text-sm uppercase tracking-wider whitespace-nowrap transition-all duration-300 ${selectedCategory === category.value ? 'bg-gradient-to-r from-primary to-tertiary text-background shadow-glow-orange scale-105' : 'bg-white/5 border border-white/10 text-muted hover:border-primary/50 hover:text-white'}`}
+                                    className={`px-5 py-2.5 rounded-full font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-all duration-300 ${selectedCategory === category.value ? 'bg-gradient-to-r from-primary to-tertiary text-background shadow-glow-orange scale-105' : 'bg-white/5 border border-white/10 text-muted hover:border-primary/50 hover:text-white'}`}
                                 >
                                     {category.label}
                                 </button>
                             ))}
                         </div>
-                        <div className="flex bg-surface-hover rounded-lg p-1 border border-white/10 flex-shrink-0 overflow-x-auto scrollbar-hide max-w-full">
-                            {availableSources.map((source) => (
-                                <button
-                                    key={source.value}
-                                    onClick={() => setSelectedSource(source.value)}
-                                    className={`px-3 py-1.5 rounded-md font-medium text-xs md:text-sm transition-all duration-300 whitespace-nowrap ${selectedSource === source.value ? 'bg-surface border border-white/10 text-white shadow-sm' : 'text-muted hover:text-white hover:bg-white/5'}`}
-                                >
-                                    {source.label}
-                                </button>
-                            ))}
+
+                        {/* Source Filter */}
+                        <div className="flex items-center gap-4">
+                            <span className="text-[10px] font-mono text-muted uppercase tracking-widest hidden md:block">Filter by Source:</span>
+                            <div className="flex bg-surface-hover rounded-lg p-1 border border-white/10 flex-shrink-0 overflow-x-auto scrollbar-hide max-w-full">
+                                {availableSources.map((source) => (
+                                    <button
+                                        key={source.value}
+                                        onClick={() => setSelectedSource(source.value)}
+                                        className={`px-3 py-1.5 rounded-md font-medium text-xs transition-all duration-300 whitespace-nowrap ${selectedSource === source.value ? 'bg-surface border border-white/10 text-white shadow-sm' : 'text-muted hover:text-white hover:bg-white/5'}`}
+                                    >
+                                        {source.label}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
