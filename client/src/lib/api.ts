@@ -1,6 +1,6 @@
 import { Market, MarketsResponse, TrendingMarketsResponse, NewsResponse, MarketFilters } from './types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? '/api' : 'http://localhost:3001/api');
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 // Generic fetch wrapper with error handling
 async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> {
