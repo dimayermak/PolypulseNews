@@ -21,19 +21,43 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "PolypulseNews - Prediction Market Intelligence",
-    description: "Real-time prediction market data from Polymarket and Kalshi with correlated news insights. Track trending markets, analyze odds, and stay informed.",
-    keywords: ["prediction markets", "polymarket", "kalshi", "market odds", "trading", "news", "analytics"],
+    title: "PolypulseNews - Prediction Market Intelligence | Polymarket & Kalshi Insights",
+    description: "Real-time prediction market data from Polymarket and Kalshi with correlated news insights. Track trending markets, calculate odds, and stay ahead with AI-driven news analytics.",
+    keywords: [
+        "prediction markets",
+        "polymarket analytics",
+        "kalshi odds",
+        "election odds real-time",
+        "crypto prediction markets",
+        "market intelligence",
+        "trading signals",
+        "news analytics",
+        "PolypulseNews"
+    ],
     authors: [{ name: "PolypulseNews" }],
     openGraph: {
-        title: "PolypulseNews - Prediction Market Intelligence",
-        description: "Real-time prediction market data with correlated news insights",
+        title: "PolypulseNews - Prediction Market Intelligence & Analysis",
+        description: "Real-time prediction market data with correlated news insights. The pulse of Polymarket and Kalshi.",
         type: "website",
+        url: "https://polypulse-news.vercel.app",
+        siteName: "PolypulseNews",
     },
     twitter: {
         card: "summary_large_image",
         title: "PolypulseNews - Prediction Market Intelligence",
         description: "Real-time prediction market data with correlated news insights",
+        creator: "@PolypulseNews",
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
     },
 };
 

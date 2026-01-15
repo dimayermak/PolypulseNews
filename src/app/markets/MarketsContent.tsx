@@ -10,6 +10,7 @@ import { getMarkets } from '@/lib/api';
 import { MarketCategory } from '@/lib/types';
 import { SourceFilter, MarketSource } from '@/components/SourceFilter';
 import { Search, Filter } from 'lucide-react';
+import { AdBanner } from '@/components/AdBanner';
 
 export default function MarketsContent() {
     const [selectedCategory, setSelectedCategory] = useState<MarketCategory>('all');
@@ -96,7 +97,23 @@ export default function MarketsContent() {
                         <>
                             <div className="mb-6"><p className="text-sm text-muted font-mono">Showing {data.markets.length} of {data.total} markets</p></div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {data.markets.map((market) => <MarketCard key={market.id} market={market} />)}
+                                {data.markets.map((market, index) => (
+                                    <React.Fragment key={market.id}>
+                                        <MarketCard market={market} />
+                                        {index === 5 && (
+                                            <div className="md:col-span-2 lg:col-span-3">
+                                                <AdBanner
+                                                    type="native"
+                                                    label="Recommended"
+                                                    title="Hedge Your Outlook with Kalshi"
+                                                    description="Regulated prediction markets for US events. Trade on interest rates, economic data, and more with legal peace of mind."
+                                                    ctaText="Start Trading"
+                                                    href="https://kalshi.com"
+                                                />
+                                            </div>
+                                        )}
+                                    </React.Fragment>
+                                ))}
                             </div>
                         </>
                     )}

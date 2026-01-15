@@ -8,9 +8,11 @@ import { Zap, TrendingUp, Newspaper, Sparkles, ArrowRight } from 'lucide-react';
 
 import { Metadata } from 'next';
 
+import { AdBanner } from '@/components/AdBanner';
+
 export const metadata: Metadata = {
-    title: 'PolypulseNews | Prediction Market Intelligence & News',
-    description: 'Track real-time prediction market data from Polymarket and Kalshi with correlated news insights. Analysis, odds, and trading signals in one place.',
+    title: 'PolypulseNews | Real-Time Prediction Market Intelligence & News',
+    description: 'Track real-time prediction market data from Polymarket and Kalshi with correlated news insights. Analysis, live odds, and AI-driven trading signals.',
 };
 
 export default function HomePage() {
@@ -90,6 +92,14 @@ export default function HomePage() {
             {/* Trending Markets Section */}
             <section className="py-24 border-b border-white/10">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mb-12">
+                        <AdBanner
+                            title="Trade the Pulse of the World"
+                            description="Access deep liquidity and the best odds on the largest prediction market. Joint Polymarket today and get a $100 trading credit bonus."
+                            ctaText="Claim Bonus"
+                            href="https://polymarket.com"
+                        />
+                    </div>
                     <TrendingMarkets />
                 </div>
             </section>

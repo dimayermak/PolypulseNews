@@ -18,13 +18,22 @@ const RSS_FEEDS: Record<string, string[]> = {
     general: [
         'https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en',
         'https://finance.yahoo.com/news/rssindex',
+        'http://feeds.bbci.co.uk/news/world/rss.xml',
+        'https://www.aljazeera.com/xml/rss/all.xml',
     ],
     crypto: [
         'https://www.coindesk.com/arc/outboundfeeds/rss/',
-        'https://cointelegraph.com/rss'
+        'https://cointelegraph.com/rss',
+        'https://bitcoinmagazine.com/feed'
     ],
     tech: [
         'https://techcrunch.com/feed/',
+        'https://www.theverge.com/rss/index.xml',
+        'https://www.wired.com/feed/rss',
+    ],
+    business: [
+        'https://search.cnbc.com/rs/search/view.xml?partnerId=2000&keywords={query}',
+        'https://www.ft.com/?format=rss',
     ]
 };
 
@@ -41,10 +50,16 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
 
         // Determine which feeds to use based on query
         let feedsToFetch = [...RSS_FEEDS.general];
-        if (query.match(/crypto|bitcoin|eth|doge/i)) {
+        if (query.match(/crypto|bitcoin|eth|doge|solana|blockchain/i)) {
             feedsToFetch = [...feedsToFetch, ...RSS_FEEDS.crypto];
-        } else if (query.match(/tech|ai|apple|nvidia|software/i)) {
+        }
+
+        if (query.match(/tech|ai|apple|nvidia|software|tesla|startup/i)) {
             feedsToFetch = [...feedsToFetch, ...RSS_FEEDS.tech];
+        }
+
+        if (query.match(/finance|stock|market|fed|inflation|economy|gdp/i)) {
+            feedsToFetch = [...feedsToFetch, ...RSS_FEEDS.business];
         }
 
         const feedPromises = feedsToFetch.map(async (url) => {
@@ -52,19 +67,36 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
                 const feedUrl = url.includes('{query}') ? url.replace('{query}', cleanQuery) : url;
                 const feed = await parser.parseURL(feedUrl);
 
-                // Map items immediately to preserve source info
                 return feed.items.map(item => {
-                    // Determine source name
-                    let sourceName = 'Google News';
-                    if (url.includes('yahoo')) sourceName = 'Yahoo Finance';
-                    else if (url.includes('coindesk')) sourceName = 'CoinDesk';
-                    else if (url.includes('cointelegraph')) sourceName = 'CoinTelegraph';
-                    else if (url.includes('techcrunch')) sourceName = 'TechCrunch';
+                    let sourceName = 'News';
+                    const lowerUrl = url.toLowerCase();
+                    const itemUrl = (item.link || '').toLowerCase();
+
+                    if (lowerUrl.includes('google')) sourceName = 'Google News';
+                    else if (lowerUrl.includes('yahoo')) sourceName = 'Yahoo Finance';
+                    else if (lowerUrl.includes('bbci')) sourceName = 'BBC News';
+                    else if (lowerUrl.includes('aljazeera')) sourceName = 'Al Jazeera';
+                    else if (lowerUrl.includes('coindesk')) sourceName = 'CoinDesk';
+                    else if (lowerUrl.includes('cointelegraph')) sourceName = 'CoinTelegraph';
+                    else if (lowerUrl.includes('techcrunch')) sourceName = 'TechCrunch';
+                    else if (lowerUrl.includes('theverge')) sourceName = 'The Verge';
+                    else if (lowerUrl.includes('wired')) sourceName = 'Wired';
+                    else if (lowerUrl.includes('cnbc')) sourceName = 'CNBC';
+                    else if (lowerUrl.includes('ft.com')) sourceName = 'Financial Times';
+                    else if (lowerUrl.includes('bitcoinmagazine')) sourceName = 'Bitcoin Magazine';
+
+                    // Deep source detection from item link if generic
+                    if (sourceName === 'Google News' || sourceName === 'News') {
+                        if (itemUrl.includes('reuters.com')) sourceName = 'Reuters';
+                        else if (itemUrl.includes('bloomberg.com')) sourceName = 'Bloomberg';
+                        else if (itemUrl.includes('wsj.com')) sourceName = 'WSJ';
+                        else if (itemUrl.includes('nytimes.com')) sourceName = 'NY Times';
+                        else if (itemUrl.includes('forbes.com')) sourceName = 'Forbes';
+                    }
 
                     return { ...item, _sourceName: sourceName, _feedUrl: url };
                 }) as any[];
             } catch (err) {
-                console.error(`Error fetching feed ${url}:`, err);
                 return [];
             }
         });
@@ -72,59 +104,75 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
         const allItems = await Promise.all(feedPromises);
         const flattenedItems = allItems.flat();
 
-        // Filter and map items
+        // Unique by title to avoid duplicates across feeds
+        const seenTitles = new Set();
+
         const newsItems: NewsItem[] = flattenedItems
             .filter((item: any) => {
-                if (!item.title) return false;
-                // If it's a search query result (Google), it's highly relevant.
-                // If it's a generic feed (Yahoo), we match any keyword.
-                const isGenericFeed = !item._feedUrl?.includes('google');
+                if (!item.title || seenTitles.has(item.title)) return false;
+                seenTitles.add(item.title);
+
+                const isGenericFeed = !item._feedUrl?.includes('google') && !item._feedUrl?.includes('cnbc');
                 if (isGenericFeed) {
                     const keywords = query.toLowerCase().split(/\s+/).filter(k => k.length > 2);
                     return keywords.some(kw =>
                         item.title.toLowerCase().includes(kw) ||
-                        item.contentSnippet?.toLowerCase().includes(kw)
+                        (item.contentSnippet || '').toLowerCase().includes(kw)
                     );
                 }
                 return true;
             })
             .map((item: any) => {
-                // Extract image
+                // Robust Image Extraction Engine
                 let imageUrl = '';
-                if (item.enclosure?.url && item.enclosure.type?.startsWith('image')) {
+
+                // 1. Enclosure
+                if (item.enclosure?.url && (item.enclosure.type?.startsWith('image') || item.enclosure.url.match(/\.(jpg|jpeg|png|webp|gif)/i))) {
                     imageUrl = item.enclosure.url;
-                } else if (item['media:content']?.['$']?.url) {
-                    imageUrl = item['media:content']['$'].url;
-                } else if (item['media:thumbnail']?.['$']?.url) {
+                }
+                // 2. Media Content (handle arrays and single objects)
+                else if (item['media:content']) {
+                    const media = item['media:content'];
+                    if (Array.isArray(media)) {
+                        const img = media.find(m => m['$']?.url && (!m['$']?.type || m['$'].type.startsWith('image')));
+                        if (img) imageUrl = img['$'].url;
+                    } else if (media['$']?.url) {
+                        imageUrl = media['$'].url;
+                    }
+                }
+                // 3. Media Thumbnail
+                else if (item['media:thumbnail']?.['$']?.url) {
                     imageUrl = item['media:thumbnail']['$'].url;
-                } else if (item.content) {
-                    const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
-                    if (imgMatch) imageUrl = imgMatch[1];
+                }
+                // 4. Content/Description Regex (often higher quality)
+                const htmlSearch = (item.content || '') + (item['content:encoded'] || '') + (item.description || '') + (item.contentSnippet || '');
+                if (!imageUrl || imageUrl.includes('spacer') || imageUrl.length < 20) {
+                    const imgMatch = htmlSearch.match(/<img[^>]+src="([^">]+)"/i);
+                    if (imgMatch && !imgMatch[1].includes('feedburner') && !imgMatch[1].includes('doubleclick')) {
+                        imageUrl = imgMatch[1];
+                    }
                 }
 
-                // Fallback: Try to find image in description if it contains HTML
-                if (!imageUrl && item.contentSnippet && item.contentSnippet.includes('<img')) {
-                    const imgMatch = item.contentSnippet.match(/<img[^>]+src="([^">]+)"/);
-                    if (imgMatch) imageUrl = imgMatch[1];
-                }
+                // Clean relative URLs if necessary (usually not needed for RSS but safe)
+                if (imageUrl && imageUrl.startsWith('//')) imageUrl = 'https:' + imageUrl;
 
                 return {
                     title: item.title || '',
                     link: item.link || '',
                     source: item._sourceName || item.source?.name || 'News',
                     pubDate: item.pubDate || new Date().toISOString(),
-                    description: item.contentSnippet || item.content || '',
+                    description: (item.contentSnippet || item.content || '').replace(/<[^>]*>/g, '').slice(0, 200) + '...',
                     imageUrl,
                 } as NewsItem;
             })
             .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
             .map((item: NewsItem) => {
-                if (item.source === 'TechCrunch' || item.title.toLowerCase().includes(' ai ')) {
+                if (item.source === 'TechCrunch' || item.source === 'CNBC' || item.title.toLowerCase().includes(' ai ')) {
                     item.isSponsored = true;
                 }
                 return item;
             })
-            .slice(0, 30); // Limit to 30 items
+            .slice(0, 40);
 
         cache.set(cacheKey, newsItems);
         return newsItems;
@@ -135,34 +183,34 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
 }
 
 export async function getNewsForMarket(marketTitle: string, category?: string): Promise<NewsItem[]> {
-    // Extract keywords from market title: replace dashes/special chars with spaces
-    // and keep only relevant words
+    // Better keyword extraction for markets
     const keywords = marketTitle
-        .replace(/[^\w\s]/g, ' ')
+        .replace(/[^\w\s-]/g, '') // Keep dashes for slugs if needed but mainly spaces
+        .replace(/Will|be|the|in|at|to|a|an|of|for|on/gi, '') // Remove stop words
         .split(/\s+/)
-        .filter(word => word.length > 3)
-        .slice(0, 6)
+        .filter(word => word.length > 2)
+        .slice(0, 5)
         .join(' ');
 
-    if (!keywords) return getTrendingNews(category);
+    if (!keywords || keywords.trim().length < 3) return getTrendingNews(category);
 
     return getNewsForQuery(keywords);
 }
 
 export async function getTrendingNews(category?: string): Promise<NewsItem[]> {
     const categoryQueries: Record<string, string> = {
-        politics: 'election politics government congress senate',
-        sports: 'sports nfl nba mlb soccer',
-        economics: 'finance economy stock market inflation',
-        crypto: 'crypto bitcoin ethereum blockchain',
-        technology: 'technology ai tech apple google nvidia',
-        entertainment: 'entertainment celebrity movie music oscars',
-        all: 'top news headlines'
+        politics: 'election Biden Trump government politics',
+        sports: 'sports NFL NBA MLB score game',
+        economics: 'Fed inflation stock market economy',
+        crypto: 'Bitcoin Ethereum Crypto Solana',
+        technology: 'AI Apple Nvidia Tech OpenAI',
+        entertainment: 'Oscars Movie Celebrity Music Hollywood',
+        all: 'latest news headlines world'
     };
 
     const query = category && categoryQueries[category]
         ? categoryQueries[category]
-        : 'market finance crypto politics';
+        : 'market finance crypto news';
 
     return getNewsForQuery(query);
 }

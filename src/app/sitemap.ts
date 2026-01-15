@@ -19,12 +19,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Market routes
     try {
-        const markets = await getAllMarkets(100);
+        const markets = await getAllMarkets(500); // Increased for better long-tail coverage
         const marketRoutes = markets.map((market) => ({
             url: `${baseUrl}/markets/${market.id}`,
             lastModified: new Date(market.updatedAt || new Date()),
             changeFrequency: 'hourly' as const,
-            priority: 0.6,
+            priority: 0.7, // Slightly higher priority for indexed markets
         }));
 
         return [...routes, ...marketRoutes];
