@@ -21,7 +21,7 @@ const GUIDES: Guide[] = [
         readTime: '12 min',
         author: 'Polypulse Intelligence',
         lastUpdated: '2024-01-15',
-        imageUrl: 'https://images.unsplash.com/photo-1644659513002-02835f2ce13d?auto=format&fit=crop&q=80&w=1200',
+        imageUrl: 'https://images.unsplash.com/photo-1551288049-bbbda5366391?q=80&w=1200&auto=format&fit=crop',
         content: `
             <h2>The Science of Prediction</h2>
             <p>At their core, prediction markets are decentralized information processors. While traditional polls measure what people <em>say</em> they will do, markets measure what they are willing to <em>risk</em>. This distinction is the foundation of market efficiency.</p>
@@ -46,7 +46,7 @@ const GUIDES: Guide[] = [
         readTime: '20 min',
         author: 'Polypulse Intelligence',
         lastUpdated: '2024-01-16',
-        imageUrl: 'https://images.unsplash.com/photo-1633158829585-23ba8f7c9caf?auto=format&fit=crop&q=80&w=1200',
+        imageUrl: 'https://images.unsplash.com/photo-1611974717528-587ad043d1b4?q=80&w=1200&auto=format&fit=crop',
         content: `
             <h2>The Arbitrage Opportunity</h2>
             <p>Markets are rarely identical. Because Kalshi is a US-regulated exchange and Polymarket is a decentralized protocol, their participant pools differ significantly. This creates structural price gaps—Alpha.</p>
@@ -74,7 +74,7 @@ const GUIDES: Guide[] = [
         readTime: '15 min',
         author: 'Polypulse Intelligence',
         lastUpdated: '2024-01-16',
-        imageUrl: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=1200',
+        imageUrl: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=1200&auto=format&fit=crop',
         content: `
             <h2>Level Up: Beyond the Price</h2>
             <p>Intermediate traders look at the price. Professionals look at the <strong>Depth</strong>. The order book is a map of where people are willing to stand their ground.</p>
@@ -103,7 +103,7 @@ const GUIDES: Guide[] = [
         readTime: '10 min',
         author: 'Polypulse Intelligence',
         lastUpdated: '2024-01-16',
-        imageUrl: 'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=1200',
+        imageUrl: 'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=1200&auto=format&fit=crop',
         content: `
             <h2>The Psychology of the Trade</h2>
             <p>Social media is a echo chamber. Prediction markets are a reality check. The most common mistake traders make is "Wishing"—betting on what they <em>want</em> to happen rather than what the <em>data</em> says will happen.</p>

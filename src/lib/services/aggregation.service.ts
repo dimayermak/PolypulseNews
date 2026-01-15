@@ -135,7 +135,7 @@ export function transformPolymarketEvent(event: any): Market {
 
     return {
         id: event.id,
-        slug: event.slug || event.id,
+        slug: mainMarket.slug || event.slug || event.id,
         title: event.title || mainMarket.question || '',
         description: event.description || mainMarket.description || '',
         category: categorizeMarket(event.title || '', event.tags?.map((t: any) => t.label) || []),

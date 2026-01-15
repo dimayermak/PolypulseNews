@@ -104,10 +104,10 @@ export function MarketCard({ market }: MarketCardProps) {
                     </div>
                 </CardContent>
 
-                <CardFooter>
-                    <Button variant="ghost" size="sm" className="w-full">
-                        View Details
-                    </Button>
+                <CardFooter className="pt-0">
+                    <div className="w-full py-2 px-4 rounded-xl bg-white/5 border border-white/10 text-center text-xs font-mono uppercase tracking-widest text-muted group-hover:text-primary group-hover:border-primary/30 transition-all">
+                        View Market Intelligence
+                    </div>
                 </CardFooter>
             </Card>
         </Link>
