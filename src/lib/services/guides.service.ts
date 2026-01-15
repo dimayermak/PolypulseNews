@@ -83,6 +83,48 @@ const GUIDES: Guide[] = [
             <h3>Hedging with Real-World Markets</h3>
             <p>Modern traders don't just trade one market against another; they hedge against traditional assets. If you bet on a "Bitcoin over 100k" prediction market, you might hedge that position by shorting BTC futures on a traditional exchange.</p>
         `
+    },
+    {
+        id: '4',
+        slug: 'psychology-of-betting',
+        title: 'The Psychology of Prediction Markets: Logic vs. Emotion',
+        description: 'Why money on the line creates better information than any opinion poll ever could.',
+        category: 'basics',
+        readTime: '10 min',
+        author: 'Polypulse Research',
+        lastUpdated: '2024-01-16',
+        imageUrl: 'https://images.unsplash.com/photo-1518186239717-2e9b1367ea9a?auto=format&fit=crop&q=80&w=1000',
+        content: `
+            <h2>The "Truth Machine"</h2>
+            <p>Economists often call prediction markets "Truth Machines." But why? The secret lies in the psychological shift that occurs when an individual stands to lose capital. This is known as <strong>Skin in the Game</strong>.</p>
+            
+            <h3>Logic Over Loudness</h3>
+            <p>In a social media poll, the loudest voices win. In a prediction market, the most accurate voices win. If you have an emotional bias toward a political candidate but the data says they are losing, betting on them is simply a donation to the other side. Markets punish emotion and reward logic.</p>
+
+            <h3>The Wisdom of Crowds</h3>
+            <p>Sir Francis Galton famously discovered that the average guess of a crowd at a county fair regarding the weight of an ox was nearly perfect. Prediction markets apply this mathematically to everything from geopolitics to interest rates.</p>
+        `
+    },
+    {
+        id: '5',
+        slug: 'liquidity-and-slippage',
+        title: 'Liquidity Analysis: Avoiding Slippage in Prediction Trades',
+        description: 'How to use volume mapping to enter and exit positions without moving the market price.',
+        category: 'advanced',
+        readTime: '18 min',
+        author: 'Polypulse Research',
+        lastUpdated: '2024-01-16',
+        imageUrl: 'https://images.unsplash.com/photo-1551288049-bbbda5366391?auto=format&fit=crop&q=80&w=1000',
+        content: `
+            <h2>Understanding the Order Book</h2>
+            <p>For professional traders, the price is only half the story. The other half is <strong>Liquidity</strong>. If you want to bet $10,000 on an event with only $500 in the order book, you will experience "Slippage"—meaning you will get a much worse price than what is displayed.</p>
+
+            <h3>Spotting "Thin" Markets</h3>
+            <p>Using Polypulse's Analytics, you can see the volume split between platforms. A market might be priced at 60% on Polymarket but have no depth, while being 62% on Kalshi with millions in liquidity. The smart trade is often the 62% because it allows for a cleaner exit.</p>
+
+            <h3>The Impact of Sentiment Shocks</h3>
+            <p>When a news event breaks (e.g., a Fed announcement), liquidity often "dries up" instantly as market makers pull their orders to avoid being picked off. Learning to wait for liquidity to return is a hallmark of a professional trader.</p>
+        `
     }
 ];
 
