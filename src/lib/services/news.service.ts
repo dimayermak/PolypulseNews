@@ -61,7 +61,7 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
                     else if (url.includes('techcrunch')) sourceName = 'TechCrunch';
 
                     return { ...item, _sourceName: sourceName, _feedUrl: url };
-                });
+                }) as any[];
             } catch (err) {
                 console.error(`Error fetching feed ${url}:`, err);
                 return [];
@@ -75,16 +75,18 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
         const newsItems: NewsItem[] = flattenedItems
             .filter((item: any) => {
                 if (!item.title) return false;
-                // If it's a search query result (Google), it's relevant.
-                // If it's a generic feed (Yahoo), we must filter by keyword.
+                // If it's a search query result (Google), it's highly relevant.
+                // If it's a generic feed (Yahoo), we match any keyword.
                 const isGenericFeed = !item._feedUrl?.includes('google');
                 if (isGenericFeed) {
-                    return item.title.toLowerCase().includes(query.toLowerCase()) ||
-                        item.contentSnippet?.toLowerCase().includes(query.toLowerCase());
+                    const keywords = query.toLowerCase().split(/\s+/).filter(k => k.length > 2);
+                    return keywords.some(kw =>
+                        item.title.toLowerCase().includes(kw) ||
+                        item.contentSnippet?.toLowerCase().includes(kw)
+                    );
                 }
                 return true;
             })
-            .slice(0, 30) // Limit to 30 items
             .map((item: any) => {
                 // Extract image
                 let imageUrl = '';
@@ -113,7 +115,9 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
                     description: item.contentSnippet || item.content || '',
                     imageUrl,
                 };
-            });
+            })
+            .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
+            .slice(0, 30); // Limit to 30 items
 
         cache.set(cacheKey, newsItems);
         return newsItems;
@@ -124,18 +128,34 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
 }
 
 export async function getNewsForMarket(marketTitle: string, category?: string): Promise<NewsItem[]> {
-    // Extract keywords from market title
+    // Extract keywords from market title: replace dashes/special chars with spaces
+    // and keep only relevant words
     const keywords = marketTitle
-        .replace(/[^\w\s]/g, '')
-        .split(' ')
+        .replace(/[^\w\s]/g, ' ')
+        .split(/\s+/)
         .filter(word => word.length > 3)
-        .slice(0, 5)
+        .slice(0, 6)
         .join(' ');
+
+    if (!keywords) return getTrendingNews(category);
 
     return getNewsForQuery(keywords);
 }
 
-export async function getTrendingNews(): Promise<NewsItem[]> {
-    // For trending, we can query general topics
-    return getNewsForQuery('market finance crypto politics');
+export async function getTrendingNews(category?: string): Promise<NewsItem[]> {
+    const categoryQueries: Record<string, string> = {
+        politics: 'election politics government congress senate',
+        sports: 'sports nfl nba mlb soccer',
+        economics: 'finance economy stock market inflation',
+        crypto: 'crypto bitcoin ethereum blockchain',
+        technology: 'technology ai tech apple google nvidia',
+        entertainment: 'entertainment celebrity movie music oscars',
+        all: 'top news headlines'
+    };
+
+    const query = category && categoryQueries[category]
+        ? categoryQueries[category]
+        : 'market finance crypto politics';
+
+    return getNewsForQuery(query);
 }

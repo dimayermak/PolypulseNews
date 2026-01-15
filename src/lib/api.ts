@@ -65,8 +65,9 @@ export async function getNewsForMarket(marketSlug: string): Promise<NewsResponse
     return fetchAPI<NewsResponse>(`/news/${marketSlug}`);
 }
 
-export async function getTrendingNews(): Promise<NewsResponse> {
-    return fetchAPI<NewsResponse>('/news/trending');
+export async function getTrendingNews(category?: string): Promise<NewsResponse> {
+    const endpoint = `/news/trending${category && category !== 'all' ? `?category=${category}` : ''}`;
+    return fetchAPI<NewsResponse>(endpoint);
 }
 
 // Utility Functions
@@ -93,11 +94,23 @@ export function formatDate(dateString: string): string {
     const date = new Date(dateString);
     const now = new Date();
     const diffInMs = now.getTime() - date.getTime();
+
+    // Handle future dates
+    if (diffInMs < 0) {
+        const futureDiffInMs = Math.abs(diffInMs);
+        const diffInDays = Math.floor(futureDiffInMs / (1000 * 60 * 60 * 24));
+        if (diffInDays === 0) {
+            const diffInHours = Math.floor(futureDiffInMs / (1000 * 60 * 60));
+            return `In ${diffInHours}h`;
+        }
+        return `In ${diffInDays}d`;
+    }
+
     const diffInHours = diffInMs / (1000 * 60 * 60);
 
     if (diffInHours < 1) {
         const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
-        return `${diffInMinutes}m ago`;
+        return `${Math.max(0, diffInMinutes)}m ago`;
     } else if (diffInHours < 24) {
         return `${Math.floor(diffInHours)}h ago`;
     } else if (diffInHours < 48) {

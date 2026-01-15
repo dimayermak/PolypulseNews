@@ -29,8 +29,8 @@ export default function NewsPage() {
     const [searchQuery, setSearchQuery] = useState('');
 
     const { data: newsData, error, isLoading } = useSWR(
-        '/news/trending',
-        getTrendingNews,
+        ['/news/trending', selectedCategory],
+        ([url, cat]) => getTrendingNews(cat),
         {
             refreshInterval: 300000, // Refresh every 5 minutes
             revalidateOnFocus: false,

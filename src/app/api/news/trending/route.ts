@@ -5,7 +5,9 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
     try {
-        const news = await getTrendingNews();
+        const searchParams = req.nextUrl.searchParams;
+        const category = searchParams.get('category') || undefined;
+        const news = await getTrendingNews(category);
 
         return NextResponse.json({
             news,

@@ -11,8 +11,13 @@ export async function GET(
         const slug = context.params.slug;
         const decodedSlug = decodeURIComponent(slug);
 
-        // Use the slug as the topic for news
-        const news = await getNewsForMarket(decodedSlug);
+        // Fetch market title for better news matching
+        const { getMarketById } = await import('@/lib/services/aggregation.service');
+        const market = await getMarketById(decodedSlug);
+
+        // Use market title if found, otherwise fallback to slug
+        const queryTopic = market ? market.title : decodedSlug;
+        const news = await getNewsForMarket(queryTopic);
 
         return NextResponse.json({
             news,
