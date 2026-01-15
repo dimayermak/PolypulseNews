@@ -4,7 +4,8 @@ import { Header } from '@/components/Header';
 import { TrendingMarkets } from '@/components/TrendingMarkets';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { Zap, TrendingUp, Newspaper, Sparkles, ArrowRight } from 'lucide-react';
+import { Zap, TrendingUp, Newspaper, Sparkles, ArrowRight, ShieldCheck, Cpu } from 'lucide-react';
+import { PulseBackground } from '@/components/PulseBackground';
 
 import { Metadata } from 'next';
 
@@ -21,9 +22,8 @@ export default function HomePage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative overflow-hidden border-b border-white/10">
-                {/* Background Grid Pattern */}
-                <div className="absolute inset-0 bg-grid-pattern opacity-50" />
+            <section className="relative overflow-hidden border-b border-white/10 min-h-[70vh] flex items-center">
+                <PulseBackground />
 
                 {/* Radial Gradient Blurs */}
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary opacity-10 blur-[120px] rounded-full" />
@@ -37,11 +37,12 @@ export default function HomePage() {
 
                         <h1 className="font-heading font-bold text-4xl sm:text-5xl md:text-7xl leading-tight">
                             Prediction Market{' '}
-                            <span className="gradient-text whitespace-nowrap">News & Analytics</span>
+                            <span className="text-quaternary whitespace-nowrap">Intelligence</span> &{' '}
+                            <span className="gradient-text whitespace-nowrap">Analytics</span>
                         </h1>
 
-                        <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed">
-                            Make informed bets with real-time news, data-driven insights, and market intelligence from Polymarket and Kalshi.
+                        <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed border-l-2 border-primary/20 pl-6 text-left italic">
+                            &quot;The difference between a bet and an investment is the quality of your intelligence.&quot; - Access verified data, real-time news correlations, and institutional-grade analytics.
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -124,12 +125,12 @@ export default function HomePage() {
                                 <div className="p-3 rounded-lg bg-primary/20 border border-primary/50 w-fit mb-4 group-hover:shadow-glow-orange transition-all">
                                     <Newspaper className="w-6 h-6 text-primary" />
                                 </div>
-                                <div className="text-sm font-mono text-primary mb-2">STEP 1</div>
+                                <div className="text-sm font-mono text-primary mb-2">INTELLIGENCE</div>
                                 <h3 className="font-heading font-semibold text-xl mb-2">
-                                    Read the News
+                                    Curated Newsflow
                                 </h3>
                                 <p className="text-muted leading-relaxed">
-                                    Browse latest prediction market news aggregated from top sources
+                                    Our engine filters noise from signal, providing only the most impactful headlines correlated with live market shifts.
                                 </p>
                             </div>
                         </div>

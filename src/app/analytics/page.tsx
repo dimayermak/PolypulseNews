@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { getAnalytics, formatOdds, formatVolume } from '@/lib/api';
 import { TrendingUp, BarChart3, Activity, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { PulseBackground } from '@/components/PulseBackground';
 
 // New Dashboard Components
 import { KpiCards } from '@/components/analytics/KpiCards';
@@ -52,9 +53,8 @@ export default function AnalyticsPage() {
             <Header />
 
             {/* Hero Section */}
-            <section className="relative py-12 border-b border-white/10 overflow-hidden">
-                <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-                <div className="absolute top-0 right-0 w-96 h-96 bg-primary opacity-10 blur-3xl" />
+            <section className="relative py-16 border-b border-white/10 overflow-hidden">
+                <PulseBackground />
 
                 <div className="container mx-auto px-4 relative">
                     <div className="max-w-4xl">
@@ -66,11 +66,11 @@ export default function AnalyticsPage() {
                         </div>
 
                         <h1 className="font-heading font-bold text-4xl md:text-5xl mb-4 leading-tight">
-                            Market <span className="gradient-text">Analytics</span>
+                            Market <span className="text-quaternary">Intelligence</span> & <span className="gradient-text">Analytics</span>
                         </h1>
 
-                        <p className="text-lg text-muted max-w-2xl">
-                            Real-time KPIs, cross-platform trends, and aggregate volume insights.
+                        <p className="text-lg text-muted max-w-2xl border-l border-quaternary/30 pl-4">
+                            Real-time KPIs, cross-platform liquidity analysis, and institutional-grade trend detection. Use high-conviction data to inform your next move.
                         </p>
                     </div>
                 </div>

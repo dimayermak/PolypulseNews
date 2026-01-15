@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -14,6 +14,7 @@ interface MarketCardProps {
 }
 
 export function MarketCard({ market }: MarketCardProps) {
+    const [isExpanded, setIsExpanded] = useState(false);
     const yesOdds = market.currentOdds?.yes ?? 0.5;
     const noOdds = market.currentOdds?.no ?? 0.5;
     const isYesFavored = yesOdds > noOdds;
@@ -61,31 +62,47 @@ export function MarketCard({ market }: MarketCardProps) {
                         {market.title}
                     </CardTitle>
                     {market.description && (
-                        <CardDescription className="line-clamp-2">
-                            {market.description}
-                        </CardDescription>
+                        <div className="relative">
+                            <CardDescription className={`${isExpanded ? '' : 'line-clamp-2'} transition-all duration-300`}>
+                                {market.description}
+                            </CardDescription>
+                            {market.description.length > 100 && (
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setIsExpanded(!isExpanded);
+                                    }}
+                                    className="text-xs font-mono text-quaternary hover:text-primary mt-1 flex items-center gap-1 transition-colors"
+                                >
+                                    {isExpanded ? 'Show Less' : 'Read More...'}
+                                </button>
+                            )}
+                        </div>
                     )}
                 </CardHeader>
 
                 <CardContent className="space-y-4">
                     {/* Odds Display */}
                     <div className="grid grid-cols-2 gap-3">
-                        <div className={`relative p-4 rounded-xl border ${isYesFavored ? 'border-primary/50 bg-primary/10' : 'border-white/10 bg-white/5'} transition-all`}>
-                            <div className="flex items-center justify-between mb-1">
+                        <div className={`relative p-4 rounded-xl border ${isYesFavored ? 'border-primary/50 bg-primary/10' : 'border-white/10 bg-white/5'} transition-all group-hover:scale-[1.02] shadow-sm`}>
+                            <div className="absolute inset-0 bg-quaternary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
+                            <div className="flex items-center justify-between mb-1 relative z-10">
                                 <span className="text-xs font-mono text-muted uppercase tracking-wider">Yes</span>
-                                {isYesFavored && <TrendingUp className="w-3 h-3 text-primary" />}
+                                {isYesFavored && <TrendingUp className="w-3 h-3 text-primary animate-bounce-subtle" />}
                             </div>
-                            <div className={`text-2xl font-mono font-bold ${isYesFavored ? 'text-primary' : 'text-white'}`}>
+                            <div className={`text-2xl font-mono font-bold relative z-10 ${isYesFavored ? 'text-primary' : 'text-white'}`}>
                                 {formatOdds(yesOdds)}
                             </div>
                         </div>
 
-                        <div className={`relative p-4 rounded-xl border ${!isYesFavored ? 'border-primary/50 bg-primary/10' : 'border-white/10 bg-white/5'} transition-all`}>
-                            <div className="flex items-center justify-between mb-1">
+                        <div className={`relative p-4 rounded-xl border ${!isYesFavored ? 'border-primary/50 bg-primary/10' : 'border-white/10 bg-white/5'} transition-all group-hover:scale-[1.02] shadow-sm`}>
+                            <div className="absolute inset-0 bg-quaternary/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
+                            <div className="flex items-center justify-between mb-1 relative z-10">
                                 <span className="text-xs font-mono text-muted uppercase tracking-wider">No</span>
-                                {!isYesFavored && <TrendingDown className="w-3 h-3 text-primary" />}
+                                {!isYesFavored && <TrendingDown className="w-3 h-3 text-primary animate-bounce-subtle" />}
                             </div>
-                            <div className={`text-2xl font-mono font-bold ${!isYesFavored ? 'text-primary' : 'text-white'}`}>
+                            <div className={`text-2xl font-mono font-bold relative z-10 ${!isYesFavored ? 'text-primary' : 'text-white'}`}>
                                 {formatOdds(noOdds)}
                             </div>
                         </div>

@@ -18,6 +18,7 @@ const config: Config = {
         primary: "#F7931A", // Bitcoin Orange
         secondary: "#EA580C", // Burnt Orange
         tertiary: "#FFD600", // Digital Gold
+        quaternary: "#0EA5E9", // Cyber Blue (Brings in professional intelligence feel)
       },
       fontFamily: {
         heading: ["var(--font-space-grotesk)", "sans-serif"],

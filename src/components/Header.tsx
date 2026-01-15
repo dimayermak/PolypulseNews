@@ -12,11 +12,11 @@ export function Header() {
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
-                        <div className="p-2 rounded-lg bg-gradient-to-br from-primary to-tertiary shadow-glow-orange group-hover:shadow-glow-orange-lg transition-all">
+                        <div className="p-2 rounded-lg bg-gradient-to-br from-primary via-secondary to-quaternary shadow-glow-orange group-hover:shadow-glow-orange-lg transition-all animate-pulse-slow">
                             <Zap className="w-5 h-5 text-background" />
                         </div>
-                        <span className="font-heading font-bold text-xl">
-                            Polypulse<span className="gradient-text">News</span>
+                        <span className="font-heading font-bold text-xl tracking-tight">
+                            Polypulse<span className="text-quaternary group-hover:text-primary transition-colors duration-500">News</span>
                         </span>
                     </Link>
 
