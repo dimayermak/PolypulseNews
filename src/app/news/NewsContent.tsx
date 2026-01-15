@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { getTrendingNews } from '@/lib/api';
 import { Search, Newspaper } from 'lucide-react';
+import { AdBanner } from '@/components/AdBanner';
 
 type NewsCategory = 'all' | 'politics' | 'sports' | 'economics' | 'crypto' | 'technology' | 'entertainment';
 
@@ -132,7 +133,23 @@ export default function NewsContent() {
                         </Card>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {filteredNews.map((newsItem, index) => <NewsCard key={index} news={newsItem} />)}
+                            {filteredNews.map((newsItem, index) => (
+                                <React.Fragment key={index}>
+                                    <NewsCard news={newsItem} />
+                                    {index === 5 && (
+                                        <div className="md:col-span-2 lg:col-span-3">
+                                            <AdBanner
+                                                type="native"
+                                                label="Deep Insight"
+                                                title="Unlock Institutional Analytics"
+                                                description="Get access to exclusive volume mapping, liquidation levels, and real-time news alerts for Polymarket and Kalshi. Try Polypulse Pro free for 14 days."
+                                                ctaText="Try Pro Free"
+                                                href="/analytics"
+                                            />
+                                        </div>
+                                    )}
+                                </React.Fragment>
+                            ))}
                         </div>
                     )}
                 </div>
