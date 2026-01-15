@@ -155,11 +155,13 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
                 if (imageUrl && imageUrl.startsWith('//')) imageUrl = 'https:' + imageUrl;
 
                 return {
+                    id: Buffer.from(item.link || item.title || '').toString('base64').slice(0, 16),
                     title: item.title || '',
                     link: item.link || '',
                     source: item._sourceName || item.source?.name || 'News',
                     pubDate: item.pubDate || new Date().toISOString(),
                     description: (item.contentSnippet || item.content || '').replace(/<[^>]*>/g, '').slice(0, 200) + '...',
+                    content: item.content || item['content:encoded'] || item.contentSnippet || '',
                     imageUrl,
                 } as NewsItem;
             })

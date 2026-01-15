@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
+import Link from 'next/link';
 import { NewsItem } from '@/lib/types';
 import { formatDate } from '@/lib/api';
 import { Badge } from '@/components/ui/Badge';
@@ -13,10 +14,8 @@ interface NewsCardProps {
 
 export function NewsCard({ news }: NewsCardProps) {
     return (
-        <a
-            href={news.link}
-            target="_blank"
-            rel="noopener noreferrer"
+        <Link
+            href={`/news/${news.id}`}
             className="block group"
         >
             <Card hover className="h-full relative overflow-hidden">
@@ -71,6 +70,6 @@ export function NewsCard({ news }: NewsCardProps) {
                     </div>
                 </CardHeader>
             </Card>
-        </a>
+        </Link>
     );
 }

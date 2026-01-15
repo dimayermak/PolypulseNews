@@ -23,11 +23,13 @@ export interface Market {
 
 // News Item Types
 export interface NewsItem {
+    id: string;
     title: string;
     link: string;
     source: string;
     pubDate: string;
     description?: string;
+    content?: string;
     imageUrl?: string;
     isSponsored?: boolean;
 }
