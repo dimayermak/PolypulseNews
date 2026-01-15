@@ -238,3 +238,39 @@ export async function getMarketById(id: string): Promise<Market | null> {
         return null;
     }
 }
+
+export async function getMarketAnalytics(): Promise<any> {
+    const allMarkets = await getAllMarkets(100);
+
+    const totalVolume24h = allMarkets.reduce((sum, m) => sum + (m.volume24h || 0), 0);
+    const activeMarketsCount = allMarkets.filter(m => m.active).length;
+
+    // Platform split
+    const platformData = allMarkets.reduce((acc, m) => {
+        if (!acc[m.platform]) acc[m.platform] = { platform: m.platform, volume: 0, count: 0 };
+        acc[m.platform].volume += m.volume24h || 0;
+        acc[m.platform].count++;
+        return acc;
+    }, {} as Record<string, any>);
+
+    // Category distribution
+    const categoryData = allMarkets.reduce((acc, m) => {
+        if (!acc[m.category]) acc[m.category] = { category: m.category, volume: 0, count: 0 };
+        acc[m.category].volume += m.volume24h || 0;
+        acc[m.category].count++;
+        return acc;
+    }, {} as Record<string, any>);
+
+    return {
+        totalVolume24h,
+        activeMarketsCount,
+        platformSplit: Object.values(platformData),
+        categoryDistribution: Object.values(categoryData),
+        topVolumeMarkets: allMarkets.sort((a, b) => (b.volume24h || 0) - (a.volume24h || 0)).slice(0, 5),
+        topMovers: allMarkets
+            .map(m => ({ ...m, volPerD: (m.volume24h || 0) })) // Placeholder for real movers
+            .sort((a, b) => b.volPerD - a.volPerD)
+            .slice(0, 5),
+        timestamp: new Date().toISOString()
+    };
+}

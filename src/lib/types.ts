@@ -86,3 +86,26 @@ export interface WidgetConfig {
     showEndDate?: boolean;
     affiliateId?: string;
 }
+
+// Analytics Types
+export interface PlatformStat {
+    platform: string;
+    volume: number;
+    count: number;
+}
+
+export interface CategoryStat {
+    category: string;
+    volume: number;
+    count: number;
+}
+
+export interface AnalyticsData {
+    totalVolume24h: number;
+    activeMarketsCount: number;
+    platformSplit: PlatformStat[];
+    categoryDistribution: CategoryStat[];
+    topVolumeMarkets: Market[];
+    topMovers: Market[];
+    timestamp: string;
+}

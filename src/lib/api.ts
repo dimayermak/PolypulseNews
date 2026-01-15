@@ -1,4 +1,4 @@
-import { Market, MarketsResponse, TrendingMarketsResponse, NewsResponse, MarketFilters } from './types';
+import { Market, MarketsResponse, TrendingMarketsResponse, NewsResponse, MarketCategory, MarketFilters, AnalyticsData } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
@@ -68,6 +68,10 @@ export async function getNewsForMarket(marketSlug: string): Promise<NewsResponse
 export async function getTrendingNews(category?: string): Promise<NewsResponse> {
     const endpoint = `/news/trending${category && category !== 'all' ? `?category=${category}` : ''}`;
     return fetchAPI<NewsResponse>(endpoint);
+}
+
+export async function getAnalytics(): Promise<AnalyticsData> {
+    return fetchAPI<AnalyticsData>('/analytics');
 }
 
 // Utility Functions
