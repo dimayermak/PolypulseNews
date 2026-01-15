@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getMarketById } from '@/lib/services/aggregation.service';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    context: { params: { id: string } }
 ) {
     try {
-        const { id } = params;
+        const id = context.params.id;
         const market = await getMarketById(id);
 
         if (!market) {
@@ -15,7 +17,7 @@ export async function GET(
 
         return NextResponse.json(market);
     } catch (error: any) {
-        console.error(`Error in GET /api/markets/${params.id}:`, error);
+        console.error(`Error in GET /api/markets/${context.params.id}:`, error);
         return NextResponse.json(
             { error: 'Failed to fetch market', message: error.message },
             { status: 500 }
