@@ -18,6 +18,7 @@ export interface Market {
     active: boolean;
     createdAt: string;
     updatedAt: string;
+    promoted?: boolean;
 }
 
 // News Item Types
@@ -28,6 +29,7 @@ export interface NewsItem {
     pubDate: string;
     description?: string;
     imageUrl?: string;
+    isSponsored?: boolean;
 }
 
 // Aggregated Data for Market + News

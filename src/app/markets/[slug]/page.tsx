@@ -1,257 +1,51 @@
-'use client';
-
 import React from 'react';
-import { useParams } from 'next/navigation';
-import useSWR from 'swr';
-import Link from 'next/link';
-import { Header } from '@/components/Header';
-import { NewsCard } from '@/components/NewsCard';
-import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent } from '@/components/ui/Card';
-import { getMarketById, getNewsForMarket, formatOdds, formatVolume, formatDate } from '@/lib/api';
-import { TrendingUp, TrendingDown, Activity, Calendar, ExternalLink, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Metadata } from 'next';
+import { getMarketById } from '@/lib/services/aggregation.service';
+import MarketDetailContent from './MarketDetailContent';
+import { notFound } from 'next/navigation';
 
-export default function MarketDetailPage() {
-    const params = useParams();
-    const slug = params?.slug as string;
+interface PageProps {
+    params: {
+        slug: string;
+    };
+}
 
-    const { data: market, error: marketError, isLoading: marketLoading } = useSWR(
-        slug ? `/markets/${slug}` : null,
-        () => getMarketById(slug),
-        { revalidateOnFocus: false }
-    );
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const market = await getMarketById(params.slug);
 
-    const { data: newsData, error: newsError, isLoading: newsLoading } = useSWR(
-        slug ? `/news/${slug}` : null,
-        () => getNewsForMarket(slug),
-        {
-            refreshInterval: 300000, // Refresh every 5 minutes
-            revalidateOnFocus: false,
-        }
-    );
-
-    if (marketLoading) {
-        return (
-            <div className="min-h-screen bg-background">
-                <Header />
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                    <div className="max-w-5xl mx-auto space-y-8">
-                        <div className="h-12 w-48 skeleton rounded-lg" />
-                        <div className="h-64 skeleton rounded-2xl" />
-                        <div className="h-96 skeleton rounded-2xl" />
-                    </div>
-                </div>
-            </div>
-        );
+    if (!market) {
+        return {
+            title: 'Market Not Found | PolypulseNews',
+        };
     }
 
-    if (marketError || !market) {
-        return (
-            <div className="min-h-screen bg-background">
-                <Header />
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
-                    <p className="text-muted text-lg">Market not found</p>
-                    <Link href="/markets" className="inline-block mt-4">
-                        <Button variant="outline">Back to Markets</Button>
-                    </Link>
-                </div>
-            </div>
-        );
+    const title = `${market.title} | Prediction Odds & News | PolypulseNews`;
+    const description = `Live odds: ${(market.currentOdds.yes * 100).toFixed(1)}% Yes. ${market.description || 'Track real-time prediction market data and correlated news for this event.'}`;
+
+    return {
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            images: market.imageUrl ? [market.imageUrl] : [],
+            type: 'article',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            images: market.imageUrl ? [market.imageUrl] : [],
+        },
+    };
+}
+
+export default async function Page({ params }: PageProps) {
+    const market = await getMarketById(params.slug);
+
+    if (!market) {
+        notFound();
     }
 
-    // Safety check for currentOdds
-    const yesOdds = market.currentOdds?.yes ?? 0.5;
-    const noOdds = market.currentOdds?.no ?? 0.5;
-    const isYesFavored = yesOdds > noOdds;
-
-    return (
-        <div className="min-h-screen bg-background">
-            <Header />
-
-            {/* Market Details */}
-            <section className="py-12 border-b border-white/10">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-5xl mx-auto space-y-8">
-                        <div className="space-y-4">
-                            <Link href="/markets">
-                                <Button variant="ghost" size="sm" className="pl-0 hover:pl-2 transition-all">
-                                    <ArrowLeft className="w-4 h-4 mr-2" />
-                                    Back to Markets
-                                </Button>
-                            </Link>
-
-                            <div className="flex items-center gap-2">
-                                <Badge variant="glow" pulse={market.active}>
-                                    {market.category}
-                                </Badge>
-                                <Badge variant="outline">
-                                    {market.platform}
-                                </Badge>
-                                {market.active && (
-                                    <Badge variant="default" pulse>
-                                        Live
-                                    </Badge>
-                                )}
-                            </div>
-                        </div>
-
-                        {market.imageUrl && (
-                            <div className="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden mb-6 border border-white/10">
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img
-                                    src={market.imageUrl}
-                                    alt={market.title}
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-                            </div>
-                        )}
-
-                        <h1 className="font-heading font-bold text-3xl md:text-5xl leading-tight">
-                            {market.title}
-                        </h1>
-
-                        {market.description && (
-                            <p className="text-muted text-lg leading-relaxed">
-                                {market.description}
-                            </p>
-                        )}
-
-                        {/* Odds Display */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                            <Card glass={false} hover={false} className={`relative overflow-hidden ${isYesFavored ? 'border-primary/50 bg-primary/5' : ''}`}>
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary opacity-10 blur-3xl" />
-                                <CardContent className="relative p-8">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <span className="text-sm font-mono text-muted uppercase tracking-wider">
-                                            Yes Probability
-                                        </span>
-                                        {isYesFavored && <TrendingUp className="w-5 h-5 text-primary" />}
-                                    </div>
-                                    <div className={`text-5xl md:text-6xl font-mono font-bold mb-2 ${isYesFavored ? 'gradient-text' : 'text-white'}`}>
-                                        {formatOdds(yesOdds)}
-                                    </div>
-                                    <p className="text-sm text-muted">
-                                        Market believes this outcome is {isYesFavored ? 'likely' : 'unlikely'}
-                                    </p>
-                                </CardContent>
-                            </Card>
-
-                            <Card glass={false} hover={false} className={`relative overflow-hidden ${!isYesFavored ? 'border-primary/50 bg-primary/5' : ''}`}>
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-secondary opacity-10 blur-3xl" />
-                                <CardContent className="relative p-8">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <span className="text-sm font-mono text-muted uppercase tracking-wider">
-                                            No Probability
-                                        </span>
-                                        {!isYesFavored && <TrendingDown className="w-5 h-5 text-primary" />}
-                                    </div>
-                                    <div className={`text-5xl md:text-6xl font-mono font-bold mb-2 ${!isYesFavored ? 'gradient-text' : 'text-white'}`}>
-                                        {formatOdds(noOdds)}
-                                    </div>
-                                    <p className="text-sm text-muted">
-                                        Market believes this outcome is {!isYesFavored ? 'likely' : 'unlikely'}
-                                    </p>
-                                </CardContent>
-                            </Card>
-                        </div>
-
-                        {/* Market Stats */}
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                            <Card glass={false} hover={false}>
-                                <CardContent className="p-6">
-                                    <div className="flex items-center gap-3">
-                                        <div className="p-2 rounded-lg bg-primary/20 border border-primary/50">
-                                            <Activity className="w-5 h-5 text-primary" />
-                                        </div>
-                                        <div>
-                                            <div className="text-sm text-muted font-mono uppercase tracking-wider">
-                                                24h Volume
-                                            </div>
-                                            <div className="text-xl font-mono font-bold">
-                                                {formatVolume(market.volume24h)}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card glass={false} hover={false}>
-                                <CardContent className="p-6">
-                                    <div className="flex items-center gap-3">
-                                        <div className="p-2 rounded-lg bg-primary/20 border border-primary/50">
-                                            <Calendar className="w-5 h-5 text-primary" />
-                                        </div>
-                                        <div>
-                                            <div className="text-sm text-muted font-mono uppercase tracking-wider">
-                                                Ends
-                                            </div>
-                                            <div className="text-xl font-mono font-bold">
-                                                {formatDate(market.endDate)}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card glass={false} hover={false} className="md:col-span-3">
-                                <CardContent className="p-8">
-                                    <a
-                                        href={`https://${market.platform}.com?ref=polypulsenews`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="block"
-                                    >
-                                        <Button className="w-full" size="lg">
-                                            <ExternalLink className="w-5 h-5 mr-2" />
-                                            Trade on {market.platform}
-                                            <ArrowRight className="w-5 h-5 ml-2" />
-                                        </Button>
-                                    </a>
-                                    <p className="text-xs text-muted text-center mt-3">
-                                        Affiliate link - We may earn a commission
-                                    </p>
-                                </CardContent>
-                            </Card>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Related News */}
-            <section className="py-12">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-5xl mx-auto">
-                        <h2 className="font-heading font-bold text-3xl md:text-4xl mb-2">
-                            Related <span className="gradient-text">News</span>
-                        </h2>
-                        <p className="text-muted mb-8">
-                            Latest news articles correlated with this market
-                        </p>
-
-                        {newsLoading ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="h-48 rounded-2xl skeleton" />
-                                ))}
-                            </div>
-                        ) : newsError || !newsData || newsData.news.length === 0 ? (
-                            <Card glass={false} hover={false}>
-                                <CardContent className="p-12 text-center">
-                                    <p className="text-muted">No related news articles found at this time.</p>
-                                </CardContent>
-                            </Card>
-                        ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {newsData.news.map((newsItem, index) => (
-                                    <NewsCard key={index} news={newsItem} />
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </section>
-        </div>
-    );
+    return <MarketDetailContent slug={params.slug} initialData={market} />;
 }

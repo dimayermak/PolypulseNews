@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-    variant?: 'default' | 'outline' | 'glow';
+    variant?: 'default' | 'outline' | 'glow' | 'secondary';
     pulse?: boolean;
 }
 
@@ -17,6 +17,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
                         'bg-primary/20 border border-primary/50 text-primary': variant === 'default',
                         'border border-white/20 text-white': variant === 'outline',
                         'bg-primary/20 border border-primary/50 text-primary shadow-glow-orange': variant === 'glow',
+                        'bg-amber-500/20 border border-amber-500/50 text-amber-500': variant === 'secondary',
                     },
                     className
                 )}

@@ -20,6 +20,7 @@ export interface Market {
     active: boolean;
     createdAt: string;
     updatedAt: string;
+    promoted?: boolean;
 }
 
 function categorizeMarket(title: string, tags: string[] = []): string {
@@ -165,6 +166,14 @@ export async function getAllMarkets(limit: number = 1000): Promise<Market[]> {
         const kalshiMarkets = kalshiData.map(transformKalshiMarket);
 
         const allMarkets = [...polymarketMarkets, ...kalshiMarkets];
+
+        // Mark certain markets as promoted for demonstration/monetization
+        allMarkets.forEach(m => {
+            if (m.title.toLowerCase().match(/trump|election|israel/)) {
+                m.promoted = true;
+            }
+        });
+
         allMarkets.sort((a, b) => b.volume24h - a.volume24h);
 
         return allMarkets.slice(0, limit);

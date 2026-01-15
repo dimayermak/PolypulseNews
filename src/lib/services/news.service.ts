@@ -11,6 +11,7 @@ export interface NewsItem {
     pubDate: string;
     description?: string;
     imageUrl?: string;
+    isSponsored?: boolean;
 }
 
 const RSS_FEEDS: Record<string, string[]> = {
@@ -114,9 +115,15 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
                     pubDate: item.pubDate || new Date().toISOString(),
                     description: item.contentSnippet || item.content || '',
                     imageUrl,
-                };
+                } as NewsItem;
             })
             .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
+            .map((item: NewsItem) => {
+                if (item.source === 'TechCrunch' || item.title.toLowerCase().includes(' ai ')) {
+                    item.isSponsored = true;
+                }
+                return item;
+            })
             .slice(0, 30); // Limit to 30 items
 
         cache.set(cacheKey, newsItems);

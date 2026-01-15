@@ -6,6 +6,13 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Zap, TrendingUp, Newspaper, Sparkles, ArrowRight } from 'lucide-react';
 
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'PolypulseNews | Prediction Market Intelligence & News',
+    description: 'Track real-time prediction market data from Polymarket and Kalshi with correlated news insights. Analysis, odds, and trading signals in one place.',
+};
+
 export default function HomePage() {
     return (
         <div className="min-h-screen bg-background">
@@ -195,6 +202,11 @@ export default function HomePage() {
                                 <li>Polymarket (Gamma API)</li>
                                 <li>Kalshi (Public API)</li>
                                 <li>Google News RSS</li>
+                                <li>
+                                    <Link href="/sitemap.xml" className="hover:text-primary transition-colors">
+                                        Sitemap (Index)
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                         <div>

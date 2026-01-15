@@ -43,9 +43,16 @@ export function MarketCard({ market }: MarketCardProps) {
 
                 <CardHeader className="relative">
                     <div className="flex items-start justify-between gap-2 mb-2">
-                        <Badge variant="glow" pulse={market.active}>
-                            {market.category}
-                        </Badge>
+                        <div className="flex gap-2">
+                            <Badge variant="glow" pulse={market.active}>
+                                {market.category}
+                            </Badge>
+                            {market.promoted && (
+                                <Badge variant="secondary">
+                                    Promoted
+                                </Badge>
+                            )}
+                        </div>
                         <Badge variant="outline" className="text-xs">
                             {market.platform}
                         </Badge>

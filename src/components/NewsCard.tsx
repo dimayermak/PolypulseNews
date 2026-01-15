@@ -4,6 +4,7 @@ import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { NewsItem } from '@/lib/types';
 import { formatDate } from '@/lib/api';
+import { Badge } from '@/components/ui/Badge';
 import { ExternalLink, Newspaper } from 'lucide-react';
 
 interface NewsCardProps {
@@ -54,6 +55,9 @@ export function NewsCard({ news }: NewsCardProps) {
                                     </span>
                                 </div>
                                 <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2 flex items-start gap-2">
+                                    {news.isSponsored && (
+                                        <Badge variant="secondary" className="mr-1">Sponsored</Badge>
+                                    )}
                                     {news.title}
                                     <ExternalLink className="w-4 h-4 flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </CardTitle>
