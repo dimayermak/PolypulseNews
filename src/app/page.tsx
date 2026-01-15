@@ -37,7 +37,7 @@ export default function HomePage() {
 
                         <h1 className="font-heading font-bold text-4xl sm:text-5xl md:text-7xl leading-tight">
                             Prediction Market{' '}
-                            <span className="gradient-text">News & Analytics</span>
+                            <span className="gradient-text whitespace-nowrap">News & Analytics</span>
                         </h1>
 
                         <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed">
