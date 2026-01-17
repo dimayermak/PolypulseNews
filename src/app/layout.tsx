@@ -65,11 +65,6 @@ export const metadata: Metadata = {
             "tk_YKAcq0qAKpmiLUrKW4-M3OejCyhT_6qVs7Ze7h-o"
         ],
     },
-    icons: {
-        icon: "/favicon.ico",
-        shortcut: "/favicon.ico",
-        apple: "/apple-icon.png",
-    },
 };
 
 export default function RootLayout({
