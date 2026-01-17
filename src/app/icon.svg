@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7931A" />
+      <stop offset="50%" stop-color="#EA580C" />
+      <stop offset="100%" stop-color="#0EA5E9" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#logo-gradient)" />
+  <path d="M17 4L7 16H16L15 24L25 12H16L17 4Z" fill="#030304" />
+</svg>
