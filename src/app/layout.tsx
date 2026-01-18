@@ -35,11 +35,12 @@ export const metadata: Metadata = {
         "PolypulseNews"
     ],
     authors: [{ name: "PolypulseNews" }],
+    metadataBase: new URL("https://polypulsenews.live"),
     openGraph: {
         title: "PolypulseNews - Prediction Market Intelligence & Analysis",
         description: "Real-time prediction market data with correlated news insights. The pulse of Polymarket and Kalshi.",
         type: "website",
-        url: "https://polypulse-news.vercel.app",
+        url: "https://polypulsenews.live",
         siteName: "PolypulseNews",
     },
     twitter: {
@@ -47,6 +48,15 @@ export const metadata: Metadata = {
         title: "PolypulseNews - Prediction Market Intelligence",
         description: "Real-time prediction market data with correlated news insights",
         creator: "@PolypulseNews",
+    },
+    icons: {
+        icon: [
+            { url: "/favicon.ico" },
+            { url: "/icon.svg", type: "image/svg+xml" },
+        ],
+        apple: [
+            { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+        ],
     },
     robots: {
         index: true,
