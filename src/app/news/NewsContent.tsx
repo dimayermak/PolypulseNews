@@ -147,6 +147,11 @@ export default function NewsContent() {
                             {filteredNews.map((newsItem, index) => (
                                 <React.Fragment key={index}>
                                     <NewsCard news={newsItem} />
+                                    {index > 0 && index % 10 === 0 && (
+                                        <div className="md:col-span-2 lg:col-span-3">
+                                            <AAdsBanner />
+                                        </div>
+                                    )}
                                     {index === 5 && (
                                         <div className="md:col-span-2 lg:col-span-3">
                                             <AdBanner

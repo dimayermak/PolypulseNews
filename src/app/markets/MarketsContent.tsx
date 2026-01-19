@@ -11,6 +11,7 @@ import { MarketCategory } from '@/lib/types';
 import { SourceFilter, MarketSource } from '@/components/SourceFilter';
 import { Search, Filter } from 'lucide-react';
 import { AdBanner } from '@/components/AdBanner';
+import { AAdsBanner } from '@/components/AAdsBanner';
 
 export default function MarketsContent() {
     const [selectedCategory, setSelectedCategory] = useState<MarketCategory>('all');
@@ -85,6 +86,9 @@ export default function MarketsContent() {
 
             <section className="py-12">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mb-12">
+                        <AAdsBanner />
+                    </div>
                     {isLoading ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {[1, 2, 3, 4, 5, 6].map((i) => <div key={i} className="h-96 rounded-2xl skeleton" />)}
@@ -110,6 +114,11 @@ export default function MarketsContent() {
                                                     ctaText="Start Trading"
                                                     href="https://kalshi.com"
                                                 />
+                                            </div>
+                                        )}
+                                        {index > 0 && index % 10 === 0 && (
+                                            <div className="md:col-span-2 lg:col-span-3">
+                                                <AAdsBanner />
                                             </div>
                                         )}
                                     </React.Fragment>
