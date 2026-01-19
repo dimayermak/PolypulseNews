@@ -81,7 +81,7 @@ export default function GuideDetailPage() {
                             PLAYBOOK
                         </Link>
                         <ChevronRight className="w-3 h-3" />
-                        <span className="text-primary">{guide.category.toUpperCase()}</span>
+                        <span className="text-primary">{guide.category?.toUpperCase() || 'GUIDE'}</span>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
