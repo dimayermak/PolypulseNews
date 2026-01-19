@@ -138,6 +138,5 @@ export default function GuidesPage() {
                 </div>
             </main>
         </div>
-        </>
     );
 }
