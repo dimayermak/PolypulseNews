@@ -7,8 +7,9 @@ import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { getNewsItemById, formatDate } from '@/lib/api';
-import { ArrowLeft, Newspaper, Share2, ExternalLink, Calendar, User } from 'lucide-react';
+import { ArrowLeft, Newspaper, Share2, ExternalLink, Calendar, User, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import Head from 'next/head';
 
 export default function NewsDetailPage() {
     const params = useParams();
@@ -22,6 +23,41 @@ export default function NewsDetailPage() {
             revalidateOnFocus: false,
         }
     );
+
+    const [fullContent, setFullContent] = React.useState<string | null>(null);
+    const [loadingContent, setLoadingContent] = React.useState(false);
+    const [contentError, setContentError] = React.useState(false);
+
+    // Load full content on mount if news is available
+    React.useEffect(() => {
+        if (!news || fullContent !== null || loadingContent || contentError) return;
+
+        const loadFullContent = async () => {
+            setLoadingContent(true);
+            try {
+                const response = await fetch(`/api/scrape?url=${encodeURIComponent(news.link)}`);
+                const data = await response.json();
+
+                if (data.success && data.fullText) {
+                    setFullContent(data.fullText);
+                } else {
+                    setContentError(true);
+                }
+            } catch (err) {
+                setContentError(true);
+            } finally {
+                setLoadingContent(false);
+            }
+        };
+
+        // Only scrape from scrapable sources
+        const scrapableSources = ['reuters', 'techcrunch', 'bbc', 'coindesk', 'cointelegraph', 'theverge', 'wired', 'cnbc'];
+        const isScrapable = scrapableSources.some(s => news.source.toLowerCase().includes(s));
+
+        if (isScrapable) {
+            loadFullContent();
+        }
+    }, [news, fullContent, loadingContent, contentError]);
 
     if (isLoading) {
         return (
@@ -121,10 +157,25 @@ export default function NewsDetailPage() {
                         {/* Content Section */}
                         <Card className="border-white/5 bg-surface/30 backdrop-blur-md overflow-hidden">
                             <CardContent className="p-8 md:p-12">
-                                <div
-                                    className="prose prose-invert prose-orange max-w-none text-lg leading-relaxed text-muted-foreground"
-                                    dangerouslySetInnerHTML={{ __html: news.content || news.description || '' }}
-                                />
+                                {loadingContent && (
+                                    <div className="flex items-center justify-center py-12 text-muted">
+                                        <Loader2 className="w-6 h-6 animate-spin mr-3" />
+                                        Loading full article...
+                                    </div>
+                                )}
+
+                                {fullContent && !loadingContent && (
+                                    <div className="prose prose-invert prose-orange max-w-none text-lg leading-relaxed">
+                                        <div className="whitespace-pre-wrap">{fullContent}</div>
+                                    </div>
+                                )}
+
+                                {!fullContent && !loadingContent && (
+                                    <div
+                                        className="prose prose-invert prose-orange max-w-none text-lg leading-relaxed text-muted-foreground"
+                                        dangerouslySetInnerHTML={{ __html: news.content || news.description || '' }}
+                                    />
+                                )}
 
                                 <div className="mt-12 pt-12 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
                                     <div className="flex items-center gap-4">

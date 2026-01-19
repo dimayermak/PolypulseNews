@@ -1,6 +1,7 @@
 import Parser from 'rss-parser';
 import NodeCache from 'node-cache';
 import crypto from 'crypto';
+import { extractKeywords } from './keyword.service';
 
 const cache = new NodeCache({ stdTTL: 600 }); // 10 minute cache
 const globalArticleCache = new NodeCache({ stdTTL: 3600 }); // 1 hour persistent cache for individual items
@@ -18,8 +19,11 @@ export interface NewsItem {
     pubDate: string;
     description?: string;
     content?: string;
+    fullContent?: string;  // Scraped full article text
     imageUrl?: string;
     isSponsored?: boolean;
+    keywords?: string[];   // Extracted keywords for matching
+    relatedMarkets?: string[]; // Related market IDs
 }
 
 const RSS_FEEDS: Record<string, string[]> = {
@@ -163,15 +167,21 @@ export async function getNewsForQuery(query: string): Promise<NewsItem[]> {
                 // Clean relative URLs if necessary (usually not needed for RSS but safe)
                 if (imageUrl && imageUrl.startsWith('//')) imageUrl = 'https:' + imageUrl;
 
+                // Extract keywords for this article
+                const articleText = `${item.title} ${item.contentSnippet || ''} ${item.content || ''}`;
+                const extracted = extractKeywords(articleText, 15);
+                const articleKeywords = [...extracted.primary.slice(0, 10), ...extracted.entities.slice(0, 5)];
+
                 return {
                     id: generateId(item.link || item.title || ''),
                     title: item.title || '',
                     link: item.link || '',
                     source: item._sourceName || item.source?.name || 'News',
                     pubDate: item.pubDate || new Date().toISOString(),
-                    description: (item.contentSnippet || item.content || '').replace(/<[^>]*>/g, '').trim().slice(0, 200) + '...',
+                    description: (item.contentSnippet || item.content || '').replace(/\u003c[^\u003e]*\u003e/g, '').trim().slice(0, 200) + '...',
                     content: item.content || item['content:encoded'] || item.contentSnippet || '',
                     imageUrl,
+                    keywords: articleKeywords,
                 } as NewsItem;
             })
             .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
