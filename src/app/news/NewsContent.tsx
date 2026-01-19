@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/Input';
 import { getTrendingNews } from '@/lib/api';
 import { Search, Newspaper } from 'lucide-react';
 import { AdBanner } from '@/components/AdBanner';
+import { AAdsBanner } from '@/components/AAdsBanner';
 
 type NewsCategory = 'all' | 'politics' | 'sports' | 'economics' | 'crypto' | 'technology' | 'entertainment';
 

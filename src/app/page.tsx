@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Zap, TrendingUp, Newspaper, Sparkles, ArrowRight, ShieldCheck, Cpu } from 'lucide-react';
 import { PulseBackground } from '@/components/PulseBackground';
+import { AAdsBanner } from '@/components/AAdsBanner';
 
 import { Metadata } from 'next';
 
@@ -108,6 +109,9 @@ export default function HomePage() {
             {/* How It Works Section */}
             <section className="py-24 bg-surface border-b border-white/10">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mb-16">
+                        <AAdsBanner />
+                    </div>
                     <div className="text-center mb-16">
                         <h2 className="font-heading font-bold text-3xl md:text-5xl mb-4">
                             How It <span className="gradient-text">Works</span>
