@@ -23,6 +23,12 @@ interface Guide {
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
+export const metadata = {
+    title: 'Prediction Market Guides & Strategy | Polymarket, Kalshi Trading Tips',
+    description: 'Comprehensive guides on prediction markets, election betting strategies, crypto market analysis, and risk management. Learn to trade Polymarket and Kalshi like a professional analyst.',
+    keywords: ['prediction market guide', 'polymarket tutorial', 'kalshi guide', 'election betting strategy', 'crypto prediction markets', 'sports betting markets', 'trading strategies', 'market analysis'],
+};
+
 export default function GuidesPage() {
     const { data: guides, isLoading } = useSWR<Guide[]>('/api/guides', fetcher);
 
@@ -41,7 +47,7 @@ export default function GuidesPage() {
                             The Polypulse <span className="gradient-text">Playbook</span>
                         </h1>
                         <p className="text-xl text-muted max-w-2xl mx-auto leading-relaxed">
-                            Deep-dives, strategy guides, and best practices to transform you into a professional prediction market analyst.
+                            Master prediction markets with expert guides on election odds, crypto volatility, sports betting, and risk management—everything you need to trade Polymarket and Kalshi profitably.
                         </p>
                     </div>
 

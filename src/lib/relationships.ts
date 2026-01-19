@@ -1,9 +1,56 @@
 import { Market } from './types';
 import { NewsItem } from './services/news.service';
-import { findMatchingKeywords, calculateSimilarity } from './services/keyword.service';
+import { calculateSimilarity, extractKeywords } from './services/keyword.service';
 
 /**
- * Find markets related to a news article by keyword matching
+ * Enhanced keyword matching with entity recognition and weighted scoring
+ */
+function getEnhancedKeywordScore(newsKeywords: string[], marketTitle: string, marketDescription?: string): number {
+    const marketText = `${marketTitle} ${marketDescription || ''}`.toLowerCase();
+
+    // Extract market keywords with better filtering
+    const marketKeywords = extractKeywords(marketText, 20);
+    const allMarketKeywords = [...marketKeywords.primary, ...marketKeywords.entities].map(k => k.toLowerCase());
+
+    // Base similarity score
+    let score = calculateSimilarity(newsKeywords, allMarketKeywords);
+
+    // Entity matching boost - prioritize proper nouns (people, companies, events)
+    const newsEntities = newsKeywords.filter(k => k.length > 4 && /^[A-Z]/.test(k));
+    const entityMatches = newsEntities.filter(entity =>
+        marketTitle.toLowerCase().includes(entity.toLowerCase())
+    );
+    score += entityMatches.length * 0.25; // Big boost for entity matches
+
+    // Exact phrase matching boost
+    const newsTokens = newsKeywords.filter(k => k.length > 5);
+    const phraseMatches = newsTokens.filter(token =>
+        marketTitle.toLowerCase().includes(token.toLowerCase())
+    );
+    score += phraseMatches.length * 0.15;
+
+    // Category/topic alignment boost
+    const topicKeywords = {
+        'politics': ['election', 'president', 'congress', 'senate', 'vote', 'biden', 'trump', 'republican', 'democrat'],
+        'crypto': ['bitcoin', 'ethereum', 'crypto', 'btc', 'eth', 'blockchain', 'defi', 'nft'],
+        'sports': ['nfl', 'nba', 'mlb', 'soccer', 'super bowl', 'championship', 'playoffs'],
+        'tech': ['ai', 'apple', 'google', 'microsoft', 'tech', 'software', 'nvidia'],
+        'economics': ['fed', 'inflation', 'gdp', 'rate', 'economy', 'stock', 'market', 'recession']
+    };
+
+    for (const [_, keywords] of Object.entries(topicKeywords)) {
+        const newsHasTopic = newsKeywords.some(nk => keywords.includes(nk.toLowerCase()));
+        const marketHasTopic = allMarketKeywords.some(mk => keywords.includes(mk.toLowerCase()));
+        if (newsHasTopic && marketHasTopic) {
+            score += 0.1; // Topic alignment bonus
+        }
+    }
+
+    return score;
+}
+
+/**
+ * Find markets related to a news article by enhanced keyword matching
  */
 export function findRelatedMarkets(news: NewsItem, allMarkets: Market[]): Market[] {
     if (!news.keywords || news.keywords.length === 0) {
@@ -12,61 +59,47 @@ export function findRelatedMarkets(news: NewsItem, allMarkets: Market[]): Market
 
     const newsKeywords = news.keywords.map(k => k.toLowerCase());
 
-    // Score each market
-    const scoredMarkets = allMarkets.map(market => {
-        const marketKeywords = market.title
-            .toLowerCase()
-            .replace(/will|be|the|in|at|to|for/gi, '')
-            .split(/\s+/)
-            .filter((w: string) => w.length > 2);
-
-        const similarity = calculateSimilarity(newsKeywords, marketKeywords);
-
-        // Boost score if there's an exact entity match (e.g., "Trump", "Bitcoin")
-        const hasEntityMatch = news.keywords?.some(nk =>
-            market.title.toLowerCase().includes(nk.toLowerCase()) && nk.length > 4
-        );
-
-        return {
+    // Score each market with enhanced algorithm
+    const scoredMarkets = allMarkets
+        .map(market => ({
             market,
-            score: similarity + (hasEntityMatch ? 0.3 : 0)
-        };
-    })
-        .filter(item => item.score > 0.15) // Minimum threshold
+            score: getEnhancedKeywordScore(newsKeywords, market.title, market.description)
+        }))
+        .filter(item => item.score > 0.2) // Higher threshold for quality
         .sort((a, b) => b.score - a.score);
 
-    return scoredMarkets.slice(0, 5).map(item => item.market);
+    return scoredMarkets.slice(0, 6).map(item => item.market); // Return top 6
 }
 
 /**
- * Find news articles related to a market by keyword matching
+ * Find news articles related to a market by enhanced keyword matching
  */
 export function findRelatedNews(market: Market, allNews: NewsItem[]): NewsItem[] {
-    const marketKeywords = market.title
-        .toLowerCase()
-        .replace(/will|be|the|in|at|to|for/gi, '')
-        .split(/\s+/)
-        .filter(w => w.length > 2);
+    const marketText = `${market.title} ${market.description || ''}`;
+    const marketKeywordData = extractKeywords(marketText, 20);
+    const marketKeywords = [...marketKeywordData.primary, ...marketKeywordData.entities].map(k => k.toLowerCase());
 
     // Score each news item
     const scoredNews = allNews
         .filter(news => news.keywords && news.keywords.length > 0)
         .map(news => {
             const newsKeywords = news.keywords!.map(k => k.toLowerCase());
-            const similarity = calculateSimilarity(marketKeywords, newsKeywords);
 
-            // Boost if title mentions key market terms
-            const titleBoost = marketKeywords.some(mk =>
-                news.title.toLowerCase().includes(mk) && mk.length > 4
-            ) ? 0.2 : 0;
+            // Use enhanced scoring
+            const score = getEnhancedKeywordScore(newsKeywords, market.title, market.description);
+
+            // Title match boost
+            const titleMatchBoost = marketKeywords
+                .filter(mk => mk.length > 4)
+                .some(mk => news.title.toLowerCase().includes(mk)) ? 0.2 : 0;
 
             return {
                 news,
-                score: similarity + titleBoost
+                score: score + titleMatchBoost
             };
         })
-        .filter(item => item.score > 0.15)
+        .filter(item => item.score > 0.2)
         .sort((a, b) => b.score - a.score);
 
-    return scoredNews.slice(0, 8).map(item => item.news);
+    return scoredNews.slice(0, 10).map(item => item.news); // Return top 10
 }
