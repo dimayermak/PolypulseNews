@@ -87,6 +87,10 @@ export default function NewsContent() {
                 </div>
             </section>
 
+            <div className="container mx-auto px-4 mt-8">
+                <AAdsBanner />
+            </div>
+
             <section className="sticky top-16 z-40 bg-background/95 backdrop-blur-lg border-b border-white/10">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex flex-col gap-6">
