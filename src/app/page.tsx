@@ -129,7 +129,7 @@ export default function HomePage() {
                                 <div className="p-3 rounded-lg bg-primary/20 border border-primary/50 w-fit mb-4 group-hover:shadow-glow-orange transition-all">
                                     <Newspaper className="w-6 h-6 text-primary" />
                                 </div>
-                                <div className="text-sm font-mono text-primary mb-2">STEP 1: INTELLIGENCE</div>
+                                <div className="text-sm font-mono text-primary mb-2">STEP 1</div>
                                 <h3 className="font-heading font-semibold text-xl mb-2">
                                     Curated Newsflow Intelligence
                                 </h3>

@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { ArrowLeft, Clock, User, Share2, BookOpen, ChevronRight, Zap } from 'lucide-react';
 import Link from 'next/link';
+import { ExternalAd } from '@/components/ExternalAd';
 
 interface Guide {
     id: string;
@@ -126,6 +127,11 @@ export default function GuideDetailPage() {
                                     className="prose prose-invert prose-orange max-w-none text-lg text-muted-foreground leading-relaxed space-y-6"
                                     dangerouslySetInnerHTML={{ __html: guide.content }}
                                 />
+
+                                {/* Ad Network Integration */}
+                                <div className="mt-12 py-8 border-t border-white/10">
+                                    <ExternalAd />
+                                </div>
                             </article>
                         </div>
 

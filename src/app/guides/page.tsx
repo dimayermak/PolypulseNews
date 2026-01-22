@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { BookOpen, ArrowRight, Clock, Award, Star, Zap } from 'lucide-react';
 import Link from 'next/link';
+import { ExternalAd } from '@/components/ExternalAd';
 
 // Guide type locally for frontend
 interface Guide {
@@ -88,6 +89,9 @@ export default function GuidesPage() {
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <Card glass className="flex items-center justify-center p-4 border-white/5 bg-surface/20 min-h-[400px]">
+                                    <ExternalAd />
+                                </Card>
                                 {guides?.map((guide) => (
                                     <Link key={guide.id} href={`/guides/${guide.slug}`}>
                                         <Card hover className="h-full group overflow-hidden border-white/5 flex flex-col">
