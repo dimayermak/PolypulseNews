@@ -295,6 +295,9 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
                             </Card>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <Card glass className="flex items-center justify-center p-4 border-white/5 bg-surface/20 min-h-[180px]">
+                                    <ExternalAd />
+                                </Card>
                                 {newsData.news.map((newsItem, index) => (
                                     <NewsCard key={index} news={newsItem} />
                                 ))}
