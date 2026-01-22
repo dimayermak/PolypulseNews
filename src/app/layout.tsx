@@ -52,6 +52,7 @@ export const metadata: Metadata = {
     icons: {
         icon: [
             { url: "/favicon.ico" },
+            { url: "/icon.png", type: "image/png" },
             { url: "/icon.svg", type: "image/svg+xml" },
         ],
         apple: [
@@ -77,6 +78,18 @@ export const metadata: Metadata = {
     },
 };
 
+const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "PolypulseNews",
+    "url": "https://polypulsenews.live",
+    "logo": "https://polypulsenews.live/icon.svg",
+    "sameAs": [
+        "https://twitter.com/PolypulseNews"
+    ],
+    "description": "Real-time prediction market intelligence and correlated news analytics."
+};
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -84,6 +97,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className="dark">
+            <head>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+                />
+            </head>
             <body
                 className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
             >
