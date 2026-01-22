@@ -12,6 +12,7 @@ import { getMarketById, getNewsForMarket, formatOdds, formatVolume, formatDate }
 import { TrendingUp, TrendingDown, Activity, Calendar, ExternalLink, ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 import { Market } from '@/lib/types';
 import { JsonLd } from '@/components/JsonLd';
+import { AdBanner } from '@/components/AdBanner';
 
 interface MarketDetailContentProps {
     slug: string;
@@ -204,6 +205,16 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
                             </Card>
                         </div>
 
+                        {/* Ad Banner Integration */}
+                        <div className="mb-8">
+                            <AdBanner
+                                title="Trade the News with Polymarket"
+                                description="Access the world's largest prediction markets with deep liquidity and professional tools. $100 bonus for new traders."
+                                ctaText="Claim Your Bonus"
+                                href="https://polymarket.com?ref=polypulsenews"
+                            />
+                        </div>
+
                         {/* Market Stats */}
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                             <Card glass={false} hover={false}>
@@ -256,9 +267,6 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
                                             <ArrowRight className="w-5 h-5 ml-2" />
                                         </Button>
                                     </a>
-                                    <p className="text-xs text-muted text-center mt-3">
-                                        Affiliate link - We may earn a commission
-                                    </p>
                                 </CardContent>
                             </Card>
                         </div>

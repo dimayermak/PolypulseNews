@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { getMarkets } from '@/lib/api';
 import { findRelatedMarkets } from '@/lib/relationships';
 import { MarketCard } from '@/components/MarketCard';
+import { AdBanner } from '@/components/AdBanner';
 
 export default function NewsDetailPage() {
     const params = useParams();
@@ -202,6 +203,16 @@ export default function NewsDetailPage() {
                                 </div>
                             </CardContent>
                         </Card>
+
+                        {/* Ad Banner Branding */}
+                        <div className="py-2">
+                            <AdBanner
+                                title="Polymarket: The World's Information Engine"
+                                description="Trade on the outcomes of the world's most highly-debated events with unparalleled accuracy and liquidity."
+                                ctaText="Start Trading Now"
+                                href="https://polymarket.com?ref=polypulsenews"
+                            />
+                        </div>
 
                         {/* Related Context CTA */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
