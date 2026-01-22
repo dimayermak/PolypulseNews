@@ -13,6 +13,7 @@ import { TrendingUp, TrendingDown, Activity, Calendar, ExternalLink, ArrowLeft, 
 import { Market } from '@/lib/types';
 import { JsonLd } from '@/components/JsonLd';
 import { AdBanner } from '@/components/AdBanner';
+import { ExternalAd } from '@/components/ExternalAd';
 
 interface MarketDetailContentProps {
     slug: string;
@@ -206,13 +207,8 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
                         </div>
 
                         {/* Ad Banner Integration */}
-                        <div className="mb-8">
-                            <AdBanner
-                                title="Trade the News with Polymarket"
-                                description="Access the world's largest prediction markets with deep liquidity and professional tools. $100 bonus for new traders."
-                                ctaText="Claim Your Bonus"
-                                href="https://polymarket.com?ref=polypulsenews"
-                            />
+                        <div className="mb-8 max-w-4xl mx-auto">
+                            <ExternalAd />
                         </div>
 
                         {/* Market Stats */}
