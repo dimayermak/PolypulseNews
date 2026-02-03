@@ -221,7 +221,7 @@ export default function NewsClient({ initialNews, id }: NewsClientProps) {
                             <Card glass className="border-tertiary/20 hover:border-tertiary/50 transition-all p-8 flex flex-col justify-center text-center space-y-4">
                                 <h3 className="font-bold text-xl font-heading">Trade the signal?</h3>
                                 <p className="text-sm text-muted">Join the most liquid prediction market in the world.</p>
-                                <a href="https://polymarket.com" target="_blank" rel="noopener noreferrer" className="w-full">
+                                <a href="https://polymarket.com?via=dima-yermak-uf43" target="_blank" rel="noopener noreferrer" className="w-full">
                                     <Button variant="outline" className="w-full">Open Polymarket</Button>
                                 </a>
                             </Card>

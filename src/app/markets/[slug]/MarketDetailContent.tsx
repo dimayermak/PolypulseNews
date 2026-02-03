@@ -76,7 +76,7 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
             "offerCount": "1",
             "lowPrice": yesOdds,
             "highPrice": yesOdds,
-            "url": `https://${market.platform}.com?ref=polypulsenews`
+            "url": `https://${market.platform}.com?${market.platform.toLowerCase() === 'polymarket' ? 'via=dima-yermak-uf43' : 'ref=polypulsenews'}`
         },
         "publisher": {
             "@type": "Organization",
@@ -252,7 +252,7 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
                             <Card glass={false} hover={false} className="md:col-span-3">
                                 <CardContent className="p-8">
                                     <a
-                                        href={`https://${market.platform}.com?ref=polypulsenews`}
+                                        href={`https://${market.platform}.com?${market.platform.toLowerCase() === 'polymarket' ? 'via=dima-yermak-uf43' : 'ref=polypulsenews'}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="block"
