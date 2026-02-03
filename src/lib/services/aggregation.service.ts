@@ -21,6 +21,7 @@ export interface Market {
     createdAt: string;
     updatedAt: string;
     promoted?: boolean;
+    eventSlug?: string;
 }
 
 function categorizeMarket(title: string, tags: string[] = []): string {
@@ -82,6 +83,7 @@ export function transformPolymarketMarket(market: any): Market {
         active: market.active !== false && market.closed !== true,
         createdAt: market.createdAt || new Date().toISOString(),
         updatedAt: market.updatedAt || new Date().toISOString(),
+        eventSlug: market.events?.[0]?.slug || market.slug,
     };
 }
 
@@ -152,6 +154,7 @@ export function transformPolymarketEvent(event: any): Market {
         active: event.active !== false,
         createdAt: event.createdAt || new Date().toISOString(),
         updatedAt: event.updatedAt || new Date().toISOString(),
+        eventSlug: event.slug || mainMarket.slug,
     };
 }
 

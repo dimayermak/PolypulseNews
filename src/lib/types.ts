@@ -19,6 +19,7 @@ export interface Market {
     createdAt: string;
     updatedAt: string;
     promoted?: boolean;
+    eventSlug?: string;
 }
 
 // News Item Types

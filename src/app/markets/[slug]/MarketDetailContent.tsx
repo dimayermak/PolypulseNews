@@ -253,7 +253,7 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
                                 <CardContent className="p-8">
                                     <a
                                         href={market.platform.toLowerCase() === 'polymarket'
-                                            ? `https://polymarket.com/event/${market.slug}?via=dima-yermak-uf43`
+                                            ? `https://polymarket.com/event/${market.eventSlug || market.slug}?via=dima-yermak-uf43`
                                             : `https://${market.platform}.com?ref=polypulsenews`}
                                         target="_blank"
                                         rel="noopener noreferrer"
