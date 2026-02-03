@@ -97,9 +97,9 @@ export default function HomePage() {
                     <div className="mb-12">
                         <AdBanner
                             title="Trade the Pulse of the World"
-                            description="Access deep liquidity and the best odds on the largest prediction market. Joint Polymarket today and get a $100 trading credit bonus."
-                            ctaText="Claim Bonus"
-                            href="https://polymarket.com"
+                            description="Access deep liquidity and the best odds on the largest prediction market. Join Polymarket today and start trading global events."
+                            ctaText="Visit Polymarket"
+                            href="https://polymarket.com?via=dima-yermak-uf43"
                         />
                     </div>
                     <TrendingMarkets />
