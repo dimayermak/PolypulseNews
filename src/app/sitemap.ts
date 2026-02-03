@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next';
 import { getAllMarkets } from '@/lib/services/aggregation.service';
+import { getTrendingNews } from '@/lib/api';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://polypulse-news.vercel.app';
+    const baseUrl = 'https://polypulsenews.live';
 
     // Base routes
     const routes = [
@@ -18,18 +19,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     // Market routes
+    let marketRoutes: MetadataRoute.Sitemap = [];
     try {
         const markets = await getAllMarkets(500); // Increased for better long-tail coverage
-        const marketRoutes = markets.map((market) => ({
+        marketRoutes = markets.map((market) => ({
             url: `${baseUrl}/markets/${market.id}`,
             lastModified: new Date(market.updatedAt || new Date()),
             changeFrequency: 'hourly' as const,
             priority: 0.7, // Slightly higher priority for indexed markets
         }));
-
-        return [...routes, ...marketRoutes];
     } catch (error) {
-        console.error('Error generating sitemap:', error);
-        return routes;
+        console.error('Error generating markets sitemap:', error);
     }
+
+    // News routes
+    let newsRoutes: MetadataRoute.Sitemap = [];
+    try {
+        const newsResponse = await getTrendingNews('all');
+        if (newsResponse && newsResponse.news) {
+            newsRoutes = newsResponse.news.map((item) => ({
+                url: `${baseUrl}/news/${item.id}`,
+                lastModified: new Date(item.pubDate || new Date()),
+                changeFrequency: 'weekly' as const,
+                priority: 0.6,
+            }));
+        }
+    } catch (error) {
+        console.error('Error generating news sitemap:', error);
+    }
+
+    return [...routes, ...marketRoutes, ...newsRoutes];
 }

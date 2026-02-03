@@ -1,6 +1,12 @@
 import { Market, MarketsResponse, TrendingMarketsResponse, NewsItem, NewsResponse, MarketCategory, MarketFilters, AnalyticsData } from './types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
+const getBaseUrl = () => {
+    if (typeof window !== 'undefined') return ''; // Browser should use relative path
+    if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+    return process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+};
+
+const API_BASE_URL = getBaseUrl() + (process.env.NEXT_PUBLIC_API_PATH || '/api');
 
 // Generic fetch wrapper with error handling
 async function fetchAPI<T>(endpoint: string, options?: RequestInit): Promise<T> {
