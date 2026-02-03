@@ -252,14 +252,16 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
                             <Card glass={false} hover={false} className="md:col-span-3">
                                 <CardContent className="p-8">
                                     <a
-                                        href={`https://${market.platform}.com?${market.platform.toLowerCase() === 'polymarket' ? 'via=dima-yermak-uf43' : 'ref=polypulsenews'}`}
+                                        href={market.platform.toLowerCase() === 'polymarket'
+                                            ? `https://polymarket.com/event/${market.slug}?via=dima-yermak-uf43`
+                                            : `https://${market.platform}.com?ref=polypulsenews`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="block"
                                     >
                                         <Button className="w-full" size="lg">
                                             <ExternalLink className="w-5 h-5 mr-2" />
-                                            Trade on {market.platform}
+                                            Trade on {market.platform.charAt(0).toUpperCase() + market.platform.slice(1)}
                                             <ArrowRight className="w-5 h-5 ml-2" />
                                         </Button>
                                     </a>
