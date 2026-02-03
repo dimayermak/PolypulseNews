@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getAllMarkets } from '@/lib/services/aggregation.service';
 import { getTrendingNews } from '@/lib/api';
+import { GUIDES } from '@/lib/guides';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://www.polypulsenews.live';
@@ -11,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/markets',
         '/news',
         '/analytics',
+        '/guides',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),
@@ -48,5 +50,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error generating news sitemap:', error);
     }
 
-    return [...routes, ...marketRoutes, ...newsRoutes];
+    // Guide routes
+    const guideRoutes = GUIDES.map((guide) => ({
+        url: `${baseUrl}/guides/${guide.slug}`,
+        lastModified: new Date('2026-01-18'), // Consistent with API
+        changeFrequency: 'monthly' as const,
+        priority: 0.8,
+    }));
+
+    return [...routes, ...marketRoutes, ...newsRoutes, ...guideRoutes];
 }
