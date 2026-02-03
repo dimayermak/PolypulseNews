@@ -35,12 +35,12 @@ export const metadata: Metadata = {
         "PolypulseNews"
     ],
     authors: [{ name: "PolypulseNews" }],
-    metadataBase: new URL("https://polypulsenews.live"),
+    metadataBase: new URL("https://www.polypulsenews.live"),
     openGraph: {
         title: "PolypulseNews - Prediction Market Intelligence & Analysis",
         description: "Real-time prediction market data with correlated news insights. The pulse of Polymarket and Kalshi.",
         type: "website",
-        url: "https://polypulsenews.live",
+        url: "https://www.polypulsenews.live",
         siteName: "PolypulseNews",
     },
     twitter: {

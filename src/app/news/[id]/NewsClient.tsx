@@ -95,12 +95,12 @@ export default function NewsClient({ initialNews, id }: NewsClientProps) {
                                 "name": "PolypulseNews",
                                 "logo": {
                                     "@type": "ImageObject",
-                                    "url": "https://polypulsenews.live/icon.svg"
+                                    "url": "https://www.polypulsenews.live/icon.svg"
                                 }
                             },
                             "image": news.imageUrl,
                             "articleBody": news.description,
-                            "url": `https://polypulsenews.live/news/${id}`
+                            "url": `https://www.polypulsenews.live/news/${id}`
                         })
                     }}
                 />

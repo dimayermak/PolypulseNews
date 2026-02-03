@@ -68,7 +68,7 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
         "endDate": market.endDate,
         "location": {
             "@type": "VirtualLocation",
-            "url": `https://polypulse-news.vercel.app/markets/${slug}`
+            "url": `https://www.polypulsenews.live/markets/${slug}`
         },
         "offers": {
             "@type": "AggregateOffer",
@@ -83,7 +83,7 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
             "name": "PolypulseNews",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://polypulse-news.vercel.app/logo.png"
+                "url": "https://www.polypulsenews.live/icon.svg"
             }
         }
     };

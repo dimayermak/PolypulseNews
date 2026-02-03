@@ -3,7 +3,7 @@ import { getAllMarkets } from '@/lib/services/aggregation.service';
 import { getTrendingNews } from '@/lib/api';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://polypulsenews.live';
+    const baseUrl = 'https://www.polypulsenews.live';
 
     // Base routes
     const routes = [
@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Market routes
     let marketRoutes: MetadataRoute.Sitemap = [];
     try {
-        const markets = await getAllMarkets(500); // Increased for better long-tail coverage
+        const markets = await getAllMarkets(2000); // Increased for comprehensive indexed coverage
         marketRoutes = markets.map((market) => ({
             url: `${baseUrl}/markets/${market.id}`,
             lastModified: new Date(market.updatedAt || new Date()),
