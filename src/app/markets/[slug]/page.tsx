@@ -1,6 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { getMarketById } from '@/lib/services/aggregation.service';
+import { getNewsForMarket } from '@/lib/api';
 import MarketDetailContent from './MarketDetailContent';
 import { notFound } from 'next/navigation';
 
@@ -43,9 +44,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
     const market = await getMarketById(params.slug);
 
+    // Fetch news server-side for SEO
+    const news = await getNewsForMarket(params.slug).catch(() => undefined);
+
     if (!market) {
         notFound();
     }
 
-    return <MarketDetailContent slug={params.slug} initialData={market} />;
+    return <MarketDetailContent slug={params.slug} initialData={market} initialNews={news} />;
 }

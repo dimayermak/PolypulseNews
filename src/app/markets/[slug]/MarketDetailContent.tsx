@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { getMarketById, getNewsForMarket, formatOdds, formatVolume, formatDate } from '@/lib/api';
 import { TrendingUp, TrendingDown, Activity, Calendar, ExternalLink, ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
-import { Market } from '@/lib/types';
+import { Market, NewsResponse } from '@/lib/types';
 import { JsonLd } from '@/components/JsonLd';
 import { AdBanner } from '@/components/AdBanner';
 import { ExternalAd } from '@/components/ExternalAd';
@@ -18,9 +18,10 @@ import { ExternalAd } from '@/components/ExternalAd';
 interface MarketDetailContentProps {
     slug: string;
     initialData: Market;
+    initialNews?: NewsResponse;
 }
 
-export default function MarketDetailContent({ slug, initialData }: MarketDetailContentProps) {
+export default function MarketDetailContent({ slug, initialData, initialNews }: MarketDetailContentProps) {
     const { data: market, error: marketError } = useSWR(
         slug ? `/markets/${slug}` : null,
         () => getMarketById(slug),
@@ -34,8 +35,9 @@ export default function MarketDetailContent({ slug, initialData }: MarketDetailC
         slug ? `/news/${slug}` : null,
         () => getNewsForMarket(slug),
         {
-            refreshInterval: 300000, // Refresh every 5 minutes
+            refreshInterval: 300000,
             revalidateOnFocus: false,
+            fallbackData: initialNews,
         }
     );
 
