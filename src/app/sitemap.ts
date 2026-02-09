@@ -25,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     try {
         const markets = await getAllMarkets(2000); // Increased for comprehensive indexed coverage
         marketRoutes = markets.map((market) => ({
-            url: `${baseUrl}/markets/${market.id}`,
+            url: `${baseUrl}/markets/${market.slug}`,
             lastModified: new Date(market.updatedAt || new Date()),
             changeFrequency: 'hourly' as const,
             priority: 0.7, // Slightly higher priority for indexed markets
