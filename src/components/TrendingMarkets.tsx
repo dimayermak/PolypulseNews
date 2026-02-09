@@ -6,13 +6,20 @@ import { MarketCard } from '@/components/MarketCard';
 import { getTrendingMarkets } from '@/lib/api';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export function TrendingMarkets() {
+import { TrendingMarketsResponse } from '@/lib/types';
+
+interface TrendingMarketsProps {
+    initialData?: TrendingMarketsResponse;
+}
+
+export function TrendingMarkets({ initialData }: TrendingMarketsProps) {
     const { data, error, isLoading } = useSWR(
         '/markets/trending',
         getTrendingMarkets,
         {
-            refreshInterval: 60000, // Refresh every 60 seconds
+            refreshInterval: 60000,
             revalidateOnFocus: false,
+            fallbackData: initialData,
         }
     );
 

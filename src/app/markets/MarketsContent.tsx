@@ -13,7 +13,13 @@ import { Search, Filter } from 'lucide-react';
 import { AdBanner } from '@/components/AdBanner';
 import { AAdsBanner } from '@/components/AAdsBanner';
 
-export default function MarketsContent() {
+import { Market, MarketsResponse } from '@/lib/types';
+
+interface MarketsContentProps {
+    initialMarkets?: MarketsResponse;
+}
+
+export default function MarketsContent({ initialMarkets }: MarketsContentProps) {
     const [selectedCategory, setSelectedCategory] = useState<MarketCategory>('all');
     const [selectedSource, setSelectedSource] = useState<MarketSource>('all');
     const [searchQuery, setSearchQuery] = useState('');
@@ -29,6 +35,7 @@ export default function MarketsContent() {
         {
             refreshInterval: 30000,
             revalidateOnFocus: false,
+            fallbackData: initialMarkets,
         }
     );
 

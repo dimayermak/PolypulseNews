@@ -1,6 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import MarketsContent from './MarketsContent';
+import { getMarkets } from '@/lib/api';
 
 export const metadata: Metadata = {
     title: 'Explore Prediction Markets | Live Odds & Volume | PolypulseNews',
@@ -12,6 +13,14 @@ export const metadata: Metadata = {
     },
 };
 
-export default function Page() {
-    return <MarketsContent />;
+export const revalidate = 60;
+
+export default async function Page() {
+    const initialMarkets = await getMarkets({ limit: 1000 }).catch(() => ({
+        markets: [],
+        total: 0,
+        page: 1,
+        limit: 1000
+    }));
+    return <MarketsContent initialMarkets={initialMarkets} />;
 }

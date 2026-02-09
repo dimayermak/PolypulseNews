@@ -11,13 +11,21 @@ import { AAdsBanner } from '@/components/AAdsBanner';
 import { Metadata } from 'next';
 
 import { AdBanner } from '@/components/AdBanner';
+import { getTrendingMarkets } from '@/lib/api';
 
 export const metadata: Metadata = {
     title: 'PolypulseNews | Real-Time Prediction Market Intelligence & News',
     description: 'Track real-time prediction market data from Polymarket and Kalshi with correlated news insights. Analysis, live odds, and AI-driven trading signals.',
 };
 
-export default function HomePage() {
+export const revalidate = 60; // Revalidate page every 60 seconds
+
+export default async function HomePage() {
+    const initialTrendingMarkets = await getTrendingMarkets().catch(() => ({
+        markets: [],
+        timestamp: new Date().toISOString()
+    }));
+
     return (
         <div className="min-h-screen bg-background">
             <Header />
@@ -102,7 +110,7 @@ export default function HomePage() {
                             href="https://polymarket.com?via=dima-yermak-uf43"
                         />
                     </div>
-                    <TrendingMarkets />
+                    <TrendingMarkets initialData={initialTrendingMarkets} />
                 </div>
             </section>
 
