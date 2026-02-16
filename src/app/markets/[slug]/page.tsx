@@ -41,6 +41,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
 }
 
+import { getMarkets } from '@/lib/api';
+import { MarketCategory } from '@/lib/types';
+
 export default async function Page({ params }: PageProps) {
     const market = await getMarketById(params.slug);
 
@@ -51,5 +54,20 @@ export default async function Page({ params }: PageProps) {
         notFound();
     }
 
-    return <MarketDetailContent slug={params.slug} initialData={market} initialNews={news} />;
+    // Fetch related markets for internal linking mesh
+    const relatedResponse = await getMarkets({
+        category: market.category as MarketCategory,
+        limit: 4
+    }).catch(() => null);
+
+    const relatedMarkets = relatedResponse?.markets
+        .filter(m => m.id !== market.id)
+        .slice(0, 3) || [];
+
+    return <MarketDetailContent
+        slug={params.slug}
+        initialData={market}
+        initialNews={news}
+        relatedMarkets={relatedMarkets}
+    />;
 }

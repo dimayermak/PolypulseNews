@@ -15,22 +15,31 @@ import { AAdsBanner } from '@/components/AAdsBanner';
 
 import { Market, MarketsResponse } from '@/lib/types';
 
+import { Pagination } from '@/components/ui/Pagination';
+
 interface MarketsContentProps {
     initialMarkets?: MarketsResponse;
+    page?: number;
+    limit?: number;
 }
 
-export default function MarketsContent({ initialMarkets }: MarketsContentProps) {
+export default function MarketsContent({ initialMarkets, page = 1, limit = 1000 }: MarketsContentProps) {
     const [selectedCategory, setSelectedCategory] = useState<MarketCategory>('all');
     const [selectedSource, setSelectedSource] = useState<MarketSource>('all');
     const [searchQuery, setSearchQuery] = useState('');
 
+    const isFiltered = selectedCategory !== 'all' || selectedSource !== 'all' || searchQuery !== '';
+    const currentLimit = isFiltered ? 1000 : limit;
+    const currentOffset = isFiltered ? 0 : (page - 1) * limit;
+
     const { data, error, isLoading } = useSWR(
-        ['/markets', selectedCategory, searchQuery, selectedSource],
+        ['/markets', selectedCategory, searchQuery, selectedSource, isFiltered ? 1 : page],
         () => getMarkets({
             category: selectedCategory,
             source: selectedSource,
             search: searchQuery || undefined,
-            limit: 1000,
+            limit: currentLimit,
+            offset: currentOffset,
         }),
         {
             refreshInterval: 30000,
@@ -131,6 +140,14 @@ export default function MarketsContent({ initialMarkets }: MarketsContentProps) 
                                     </React.Fragment>
                                 ))}
                             </div>
+
+                            {!isFiltered && data.total > limit && (
+                                <Pagination
+                                    currentPage={page}
+                                    totalPages={Math.ceil(data.total / limit)}
+                                    basePath="/markets"
+                                />
+                            )}
                         </>
                     )}
                 </div>

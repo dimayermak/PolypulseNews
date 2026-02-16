@@ -90,6 +90,10 @@ const organizationJsonLd = {
     "description": "Real-time prediction market intelligence and correlated news analytics."
 };
 
+import { Footer } from "@/components/Footer";
+
+// ... existing code ...
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -107,6 +111,7 @@ export default function RootLayout({
                 className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
             >
                 {children}
+                <Footer />
             </body>
         </html>
     );

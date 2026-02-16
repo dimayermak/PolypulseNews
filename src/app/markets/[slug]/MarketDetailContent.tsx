@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { NewsCard } from '@/components/NewsCard';
+import { MarketCard } from '@/components/MarketCard';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
@@ -19,9 +20,10 @@ interface MarketDetailContentProps {
     slug: string;
     initialData: Market;
     initialNews?: NewsResponse;
+    relatedMarkets?: Market[];
 }
 
-export default function MarketDetailContent({ slug, initialData, initialNews }: MarketDetailContentProps) {
+export default function MarketDetailContent({ slug, initialData, initialNews, relatedMarkets = [] }: MarketDetailContentProps) {
     const { data: market, error: marketError } = useSWR(
         slug ? `/markets/${slug}` : null,
         () => getMarketById(slug),
@@ -273,6 +275,28 @@ export default function MarketDetailContent({ slug, initialData, initialNews }: 
                     </div>
                 </div>
             </section>
+
+            {/* Related Markets Mesh */}
+            {relatedMarkets.length > 0 && (
+                <section className="py-12 border-b border-white/10 bg-white/5">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="max-w-5xl mx-auto">
+                            <h2 className="font-heading font-bold text-3xl md:text-4xl mb-2">
+                                You Might Also <span className="gradient-text">Like</span>
+                            </h2>
+                            <p className="text-muted mb-8">
+                                Other active markets in {market.category}
+                            </p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {relatedMarkets.map((relatedMarket) => (
+                                    <MarketCard key={relatedMarket.id} market={relatedMarket} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* Related News */}
             <section className="py-12">

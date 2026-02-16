@@ -15,12 +15,27 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-export default async function Page() {
-    const initialMarkets = await getMarkets({ limit: 1000 }).catch(() => ({
+interface PageProps {
+    searchParams: { page?: string };
+}
+
+export default async function Page({ searchParams }: PageProps) {
+    const page = Number(searchParams.page) || 1;
+    const limit = 48; // Fetch fewer items per page for faster load and better UX
+    const offset = (page - 1) * limit;
+
+    const initialMarkets = await getMarkets({ limit, offset }).catch(() => ({
         markets: [],
         total: 0,
-        page: 1,
-        limit: 1000
+        page,
+        limit
     }));
-    return <MarketsContent initialMarkets={initialMarkets} />;
+
+    return (
+        <MarketsContent
+            initialMarkets={initialMarkets}
+            page={page}
+            limit={limit}
+        />
+    );
 }
