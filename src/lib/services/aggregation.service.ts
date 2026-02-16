@@ -205,12 +205,16 @@ export async function getTrendingMarkets(limit: number = 20): Promise<Market[]> 
 }
 
 export async function getMarketsByCategory(category: string, limit: number = 50): Promise<Market[]> {
-    const allMarkets = await getAllMarkets(100);
+    // Fetch more markets to ensure we have enough after filtering
+    const fetchLimit = Math.max(limit * 2, 200);
+    const allMarkets = await getAllMarkets(fetchLimit);
     return allMarkets.filter(m => m.category === category).slice(0, limit);
 }
 
 export async function searchMarkets(query: string, limit: number = 50): Promise<Market[]> {
-    const allMarkets = await getAllMarkets(100);
+    // Search needs a larger pool to find relevant results
+    const fetchLimit = Math.max(limit * 2, 200);
+    const allMarkets = await getAllMarkets(fetchLimit);
     const queryLower = query.toLowerCase();
 
     return allMarkets
