@@ -4,12 +4,16 @@ import MarketsContent from './MarketsContent';
 import { getMarkets } from '@/lib/api';
 
 export const metadata: Metadata = {
-    title: 'Explore Prediction Markets | Live Odds & Volume | PolypulseNews',
-    description: 'Discover the latest trading opportunities on Polymarket and Kalshi. Track election odds, crypto trends, and economic forecasts in real-time.',
+    title: 'Explore Prediction Markets – Live Odds & Volume',
+    description: 'Discover the latest trading opportunities on Polymarket and Kalshi. Track election odds, crypto trends, economic forecasts, and sports predictions in real-time.',
+    alternates: {
+        canonical: 'https://www.polypulsenews.live/markets',
+    },
     openGraph: {
-        title: 'Explore Prediction Markets | Live Odds & Volume | PolypulseNews',
+        title: 'Explore Prediction Markets – Live Odds & Volume',
         description: 'Discover the latest trading opportunities on Polymarket and Kalshi.',
         type: 'website',
+        url: 'https://www.polypulsenews.live/markets',
     },
 };
 

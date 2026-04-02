@@ -26,9 +26,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title,
         description,
+        alternates: {
+            canonical: `https://www.polypulsenews.live/markets/${params.slug}`,
+        },
         openGraph: {
             title,
             description,
+            url: `https://www.polypulsenews.live/markets/${params.slug}`,
             images: market.imageUrl ? [market.imageUrl] : [],
             type: 'article',
         },
@@ -64,10 +68,40 @@ export default async function Page({ params }: PageProps) {
         .filter(m => m.id !== market.id)
         .slice(0, 3) || [];
 
-    return <MarketDetailContent
-        slug={params.slug}
-        initialData={market}
-        initialNews={news}
-        relatedMarkets={relatedMarkets}
-    />;
+    // WebPage JSON-LD for rich results
+    const marketJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: market.title,
+        description: market.description || `Live prediction market odds for ${market.title}`,
+        url: `https://www.polypulsenews.live/markets/${params.slug}`,
+        dateModified: market.updatedAt,
+        publisher: {
+            "@type": "Organization",
+            name: "PolypulseNews",
+        },
+    };
+
+    const breadcrumbJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://www.polypulsenews.live" },
+            { "@type": "ListItem", position: 2, name: "Markets", item: "https://www.polypulsenews.live/markets" },
+            { "@type": "ListItem", position: 3, name: market.title, item: `https://www.polypulsenews.live/markets/${params.slug}` },
+        ],
+    };
+
+    return (
+        <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(marketJsonLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+            <MarketDetailContent
+                slug={params.slug}
+                initialData={market}
+                initialNews={news}
+                relatedMarkets={relatedMarkets}
+            />
+        </>
+    );
 }

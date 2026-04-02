@@ -30,7 +30,7 @@ export async function generateMetadata(
             openGraph: {
                 title: news.title,
                 description: news.description,
-                url: `https://polypulsenews.live/news/${id}`,
+                url: `https://www.polypulsenews.live/news/${id}`,
                 siteName: 'PolypulseNews',
                 images: news.imageUrl ? [
                     {
@@ -52,7 +52,7 @@ export async function generateMetadata(
                 images: news.imageUrl ? [news.imageUrl] : [],
             },
             alternates: {
-                canonical: `https://polypulsenews.live/news/${id}`,
+                canonical: `https://www.polypulsenews.live/news/${id}`,
             },
         };
     } catch (e) {
@@ -72,5 +72,36 @@ export default async function NewsPage({ params }: Props) {
         console.error('Failed to fetch news for server component:', e);
     }
 
-    return <NewsClient id={id} initialNews={initialNews} />;
+    // NewsArticle JSON-LD
+    const articleJsonLd = initialNews ? {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        headline: initialNews.title,
+        description: initialNews.description,
+        url: `https://www.polypulsenews.live/news/${id}`,
+        datePublished: initialNews.pubDate,
+        author: { "@type": "Organization", name: initialNews.source || "PolypulseNews" },
+        publisher: { "@type": "Organization", name: "PolypulseNews", url: "https://www.polypulsenews.live" },
+        image: initialNews.imageUrl || undefined,
+    } : null;
+
+    const breadcrumbJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://www.polypulsenews.live" },
+            { "@type": "ListItem", position: 2, name: "News", item: "https://www.polypulsenews.live/news" },
+            { "@type": "ListItem", position: 3, name: initialNews?.title || "Article", item: `https://www.polypulsenews.live/news/${id}` },
+        ],
+    };
+
+    return (
+        <>
+            {articleJsonLd && (
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+            )}
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+            <NewsClient id={id} initialNews={initialNews} />
+        </>
+    );
 }
