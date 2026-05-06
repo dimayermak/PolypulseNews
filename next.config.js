@@ -2,8 +2,14 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-        domains: ['news.google.com'],
+        remotePatterns: [
+            { protocol: 'https', hostname: 'news.google.com', pathname: '/**' },
+            { protocol: 'https', hostname: 'lh3.googleusercontent.com', pathname: '/**' },
+            { protocol: 'https', hostname: '*.polymarket.com', pathname: '/**' },
+            { protocol: 'https', hostname: 's3.amazonaws.com', pathname: '/**' },
+        ],
     },
+    compress: true,
     // Redirect non-www to www for canonical URL consistency
     async redirects() {
         return [
