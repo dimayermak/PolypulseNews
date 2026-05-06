@@ -51,7 +51,7 @@ export function TrendingMarkets({ initialData }: TrendingMarketsProps) {
                 </div>
                 <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
                     <span className="text-xs text-muted font-mono">
-                        Showing top 10 by volume • Updated every 60s
+                        Showing top 10 by volume - Updated every 60s
                     </span>
                     <Link href="/markets" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-quaternary transition-colors">
                         View All Markets
@@ -78,7 +78,7 @@ export function TrendingMarkets({ initialData }: TrendingMarketsProps) {
                         Trending <span className="gradient-text">Markets</span>
                     </h2>
                     <p className="text-muted mt-2">
-                        Top markets by 24-hour volume • Updated live
+                        Top markets by 24-hour volume - Updated live
                     </p>
                 </div>
                 <div className="hidden md:flex items-center gap-2">
@@ -99,7 +99,7 @@ export function TrendingMarkets({ initialData }: TrendingMarketsProps) {
                 </div>
                 <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/5">
                     <span className="text-xs text-muted font-mono">
-                        Showing top 10 by volume • Updated every 60s
+                        Showing top 10 by volume - Updated every 60s
                     </span>
                     <Link href="/markets" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-quaternary transition-colors">
                         View All Markets
