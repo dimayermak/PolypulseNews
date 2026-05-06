@@ -140,6 +140,41 @@ export default function Page({ params }: PageProps) {
         ],
     };
 
+    
+// HowTo schema for the guide page
+const howToJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: guide.title,
+    description: guide.description,
+    step: [
+        {
+            "@type": "HowToStep",
+            position: 1,
+            name: "Understand the Basics",
+            text: `Learn the fundamentals of ${guide.title.toLowerCase()} before diving into trading.`,
+        },
+        {
+            "@type": "HowToStep",
+            position: 2,
+            name: "Analyze Market Data",
+            text: "Use our Analytics dashboard to identify high-probability opportunities in real-time.",
+        },
+        {
+            "@type": "HowToStep",
+            position: 3,
+            name: "Apply the Strategy",
+            text: "Implement the tactical approaches outlined in this guide with proper risk management.",
+        },
+        {
+            "@type": "HowToStep",
+            position: 4,
+            name: "Monitor and Adjust",
+            text: "Track your positions and adjust based on new information and market movements.",
+        },
+    ],
+};
+
     return (
         <>
             <script

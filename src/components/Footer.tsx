@@ -37,6 +37,11 @@ export function Footer() {
                                     All Markets
                                 </Link>
                             </li>
+                            <li>
+                                <Link href="/about" className="text-muted hover:text-primary transition-colors text-sm">
+                                    About Us
+                                </Link>
+                            </li>
                             {categories.map((category) => (
                                 <li key={category.value}>
                                     <Link
@@ -66,8 +71,11 @@ export function Footer() {
                                 </Link>
                             </li>
                             <li>
+                                <Link href="/about" className="text-muted hover:text-primary transition-colors text-sm">
+                                    About
+                                </Link>
                                 <Link href="/guides" className="text-muted hover:text-primary transition-colors text-sm">
-                                    Guides
+                                    Playbook
                                 </Link>
                             </li>
                         </ul>

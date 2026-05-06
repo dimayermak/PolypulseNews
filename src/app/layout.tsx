@@ -23,7 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
     metadataBase: new URL("https://www.polypulsenews.live"),
     title: {
-        default: "PolypulseNews – Prediction Market Intelligence | Polymarket & Kalshi",
+        default: "PolypulseNews â Prediction Market Intelligence | Polymarket & Kalshi",
         template: "%s | PolypulseNews",
     },
     description: "Real-time prediction market data from Polymarket and Kalshi with correlated news insights. Track trending markets, calculate odds, and stay ahead with AI-driven news analytics.",
@@ -37,24 +37,37 @@ export const metadata: Metadata = {
         "trading signals",
         "news analytics",
         "PolypulseNews",
+        "prediction market news",
+        "kalshi prediction markets",
+        "betting odds tracker",
+        "market sentiment analysis",
     ],
     authors: [{ name: "PolypulseNews" }],
     alternates: {
         canonical: "https://www.polypulsenews.live",
     },
     openGraph: {
-        title: "PolypulseNews – Prediction Market Intelligence & Analysis",
+        title: "PolypulseNews â Prediction Market Intelligence & Analysis",
         description: "Real-time prediction market data with correlated news insights. The pulse of Polymarket and Kalshi.",
         type: "website",
         url: "https://www.polypulsenews.live",
         siteName: "PolypulseNews",
         locale: "en_US",
+        images: [
+            {
+                url: "/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "PolypulseNews â Prediction Market Intelligence",
+            },
+        ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "PolypulseNews – Prediction Market Intelligence",
+        title: "PolypulseNews â Prediction Market Intelligence",
         description: "Real-time prediction market data with correlated news insights",
         creator: "@PolypulseNews",
+        images: ["/og-image.png"],
     },
     icons: {
         icon: [
@@ -95,20 +108,44 @@ const organizationJsonLd = {
     description: "Real-time prediction market intelligence and correlated news analytics from Polymarket and Kalshi.",
 };
 
-const websiteJsonLd = {
+// FAQ schema for homepage - targets key prediction market queries
+const faqJsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "PolypulseNews",
-    url: "https://www.polypulsenews.live",
-    description: "Real-time prediction market intelligence and correlated news analytics.",
-    potentialAction: {
-        "@type": "SearchAction",
-        target: {
-            "@type": "EntryPoint",
-            urlTemplate: "https://www.polypulsenews.live/markets?search={search_term_string}",
+    "@type": "FAQPage",
+    mainEntity: [
+        {
+            "@type": "Question",
+            name: "What are prediction markets?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Prediction markets are exchanges where participants buy and sell shares whose prices reflect the probability of future events. The most popular platforms include Polymarket and Kalshi.",
+            },
         },
-        "query-input": "required name=search_term_string",
-    },
+        {
+            "@type": "Question",
+            name: "How to read prediction market odds?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Prediction market odds represent the probability of an outcome. If a 'Yes' share is trading at 65 cents, the market suggests a 65% chance that the event will occur.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "What is the difference between Polymarket and Kalshi?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Polymarket is a cryptocurrency-based prediction market while Kalshi is a regulated exchange in the US. PolypulseNews aggregates data from both platforms.",
+            },
+        },
+        {
+            "@type": "Question",
+            name: "How often are prediction market odds updated?",
+            acceptedAnswer: {
+                "@type": "Answer",
+                text: "Prediction market odds update in real-time as new information becomes available and participants trade shares on the platforms.",
+            },
+        },
+    ],
 };
 
 import { Footer } from "@/components/Footer";
@@ -127,7 +164,7 @@ export default function RootLayout({
                 />
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
                 />
             </head>
             <body
