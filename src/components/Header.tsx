@@ -30,9 +30,9 @@ export function Header() {
                         </Link>
                         <Link href="/analytics" className="px-4 py-2 font-mono text-sm uppercase tracking-wider text-muted hover:text-primary transition-colors">
                             Analytics
+                        </Link>
                         <Link href="/about" className="px-4 py-2 font-mono text-sm uppercase tracking-wider text-muted hover:text-primary transition-colors">
                             ABOUT
-                        </Link>
                         </Link>
                         <Link href="/guides" className="px-4 py-2 font-mono text-sm uppercase tracking-wider text-muted hover:text-primary transition-colors">
                             Playbook
