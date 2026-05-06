@@ -23,7 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
     metadataBase: new URL("https://www.polypulsenews.live"),
     title: {
-        default: "PolypulseNews â Prediction Market Intelligence | Polymarket & Kalshi",
+        default: "PolypulseNews - Prediction Market Intelligence | Polymarket & Kalshi",
         template: "%s | PolypulseNews",
     },
     description: "Real-time prediction market data from Polymarket and Kalshi with correlated news insights. Track trending markets, calculate odds, and stay ahead with AI-driven news analytics.",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
         canonical: "https://www.polypulsenews.live",
     },
     openGraph: {
-        title: "PolypulseNews â Prediction Market Intelligence & Analysis",
+        title: "PolypulseNews - Prediction Market Intelligence & Analysis",
         description: "Real-time prediction market data with correlated news insights. The pulse of Polymarket and Kalshi.",
         type: "website",
         url: "https://www.polypulsenews.live",
@@ -58,13 +58,13 @@ export const metadata: Metadata = {
                 url: "/og-image.svg",
                 width: 1200,
                 height: 630,
-                alt: "PolypulseNews â Prediction Market Intelligence",
+                alt: "PolypulseNews - Prediction Market Intelligence",
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "PolypulseNews â Prediction Market Intelligence",
+        title: "PolypulseNews - Prediction Market Intelligence",
         description: "Real-time prediction market data with correlated news insights",
         creator: "@PolypulseNews",
         images: ["/og-image.svg"],
