@@ -93,12 +93,15 @@ export function TrendingMarkets({ initialData }: TrendingMarketsProps) {
                 ref={scrollRef}
                 className="flex gap-6 overflow-x-auto custom-scrollbar pb-4 snap-x snap-mandatory"
             >
-                {data.markets.slice(0, 50).map((market) => (
+                {data.markets.slice(0, 10).map((market) => (
                     <div key={market.id} className="flex-shrink-0 w-full md:w-[400px] snap-start">
                         <MarketCard market={market} />
                     </div>
                 ))}
             </div>
-        </div>
+                    <Link href="/markets" className="inline-flex items-center gap-2 text-sm font-mono text-primary hover:text-quaternary transition-colors mt-2">
+                        View All Markets <ChevronRight className="w-4 h-4" />
+                    </Link>
+                </div>
     );
 }
