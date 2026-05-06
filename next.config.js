@@ -25,9 +25,6 @@ const nextConfig = {
             },
         ],
     },
-    output: 'standalone',
-    compress: true,
-    poweredByHeader: false,
     // Redirect non-www to www for canonical URL consistency
     async redirects() {
         return [
@@ -83,7 +80,7 @@ const nextConfig = {
             },
             {
                 // Cache static assets aggressively
-                source: '/(fonts|images|icons)/(.*)',
+                source: '/(fonts|images)/(.*)',
                 headers: [
                     {
                         key: 'Cache-Control',
