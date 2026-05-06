@@ -29,9 +29,10 @@ export default function Error({
                     <p className="text-muted">
                         We encountered an error while loading this page. Please try again.
                     </p>
-                    {process.env.NODE_ENV === 'development' && (
+                    {/* Error details available in development */}
+                    {error.digest && (
                         <pre className="text-xs text-red-400 bg-surface p-4 rounded-lg overflow-x-auto">
-                            {error.message}
+                            Digest: {error.digest}
                         </pre>
                     )}
                 </div>
