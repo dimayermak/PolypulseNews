@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import { MarketCard } from '@/components/MarketCard';
 import { getTrendingMarkets } from '@/lib/api';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 import { TrendingMarketsResponse } from '@/lib/types';
 
