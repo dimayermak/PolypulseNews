@@ -4,7 +4,7 @@ import { Header } from '@/components/Header';
 import { TrendingMarkets } from '@/components/TrendingMarkets';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { Zap, TrendingUp, Newspaper, Sparkles, ArrowRight, ShieldCheck, Cpu } from 'lucide-react';
+import { Zap, TrendingUp, Newspaper, Sparkles, ArrowRight } from 'lucide-react';
 import { PulseBackground } from '@/components/PulseBackground';
 import { AAdsBanner } from '@/components/AAdsBanner';
 
@@ -183,6 +183,35 @@ export default async function HomePage() {
                     </div>
                 </div>
             </section>
+
+{/* Newsletter Section */}
+            <section className="py-24 bg-surface border-y border-white/10">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-2xl mx-auto text-center space-y-6">
+                        <h2 className="font-heading font-bold text-3xl md:text-5xl">
+                            Stay Ahead of the <span className="gradient-text">Pulse</span>
+                        </h2>
+                        <p className="text-muted text-lg">
+                            Get weekly prediction market insights, trending odds, and analysis delivered to your inbox. No spam, just signals.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                className="flex-1 h-12 px-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder:text-slate-500 focus:ring-2 focus:ring-primary/50 outline-none transition-all"
+                            />
+                            <Button size="lg" className="whitespace-nowrap">
+                                Subscribe
+                                <ArrowRight className="w-5 h-5 ml-2" />
+                            </Button>
+                        </div>
+                        <p className="text-xs text-muted">
+                            Join traders and analysts. Unsubscribe anytime.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
 
             {/* CTA Section */}
             <section className="py-24 relative overflow-hidden">
