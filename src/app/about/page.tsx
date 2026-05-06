@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/Button';
 import { ArrowRight, Target, Shield, Bolt, Globe } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: 'About PolypulseNews â Prediction Market Intelligence Platform',
-    description: 'Learn about PolypulseNews â the leading prediction market intelligence platform aggregating real-time data from Polymarket and Kalshi with correlated news insights.',
+    title: 'About PolypulseNews - Prediction Market Intelligence Platform',
+    description: 'Learn about PolypulseNews - the leading prediction market intelligence platform aggregating real-time data from Polymarket and Kalshi with correlated news insights.',
     alternates: {
         canonical: 'https://www.polypulsenews.live/about',
     },
@@ -47,7 +47,7 @@ export default function AboutPage() {
                             Prediction markets are the most efficient aggregation of crowd wisdom available today. But the data is scattered across Polymarket, Kalshi, and dozens of news sources.
                         </p>
                         <p className="text-muted text-lg leading-relaxed">
-                            PolypulseNews aggregates, correlates, and visualizes this data in real-time â giving traders, analysts, and decision-makers a single source of truth.
+                            PolypulseNews aggregates, correlates, and visualizes this data in real-time - giving traders, analysts, and decision-makers a single source of truth.
                         </p>
                     </div>
                 </div>
@@ -99,7 +99,7 @@ export default function AboutPage() {
                             <div className="text-sm text-muted uppercase tracking-wider">Live Updates</div>
                         </div>
                         <div className="space-y-2">
-                            <div className="font-mono font-bold text-4xl gradient-text">â</div>
+                            <div className="font-mono font-bold text-4xl gradient-text">-</div>
                             <div className="text-sm text-muted uppercase tracking-wider">Markets Tracked</div>
                         </div>
                     </div>
