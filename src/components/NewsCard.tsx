@@ -48,7 +48,7 @@ export function NewsCard({ news }: NewsCardProps) {
                                     <span className="text-xs font-mono text-muted uppercase tracking-wider">
                                         {news.source}
                                     </span>
-                                    <span className="text-xs text-muted">•</span>
+                                    <span className="text-xs text-muted">-</span>
                                     <span className="text-xs text-muted font-mono">
                                         {formatDate(news.pubDate)}
                                     </span>
