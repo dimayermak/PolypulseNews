@@ -2,8 +2,32 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-        domains: ['news.google.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'news.google.com',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: '*.polymarket.com',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 's3.amazonaws.com',
+                pathname: '/**',
+            },
+        ],
     },
+    output: 'standalone',
+    compress: true,
+    poweredByHeader: false,
     // Redirect non-www to www for canonical URL consistency
     async redirects() {
         return [
@@ -42,15 +66,28 @@ const nextConfig = {
                         key: 'Referrer-Policy',
                         value: 'strict-origin-when-cross-origin',
                     },
+                    {
+                        key: 'Strict-Transport-Security',
+                        value: 'max-age=31536000; includeSubDomains; preload',
+                    },
                 ],
             },
             {
-                // Cache sitemap for 1 hour so Google gets fresh data
                 source: '/sitemap.xml',
                 headers: [
                     {
                         key: 'Cache-Control',
                         value: 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
+                    },
+                ],
+            },
+            {
+                // Cache static assets aggressively
+                source: '/(fonts|images|icons)/(.*)',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable',
                     },
                 ],
             },
