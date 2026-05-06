@@ -41,7 +41,7 @@ export const GUIDES: Guide[] = [
         category: 'Advanced',
         readTime: '10 min read',
         author: 'Polypulse Team',
-        keywords: ['election odds', '2024 election predictions', 'presidential election betting', 'how to read betting odds', 'implied probability', 'election forecasting', 'political prediction markets', 'trump vs biden odds']
+        keywords: ['election odds', '2026 election predictions', 'presidential election betting', 'how to read betting odds', 'implied probability', 'election forecasting', 'political prediction markets', 'midterm odds 2026']
     },
     {
         id: '4',
@@ -71,7 +71,7 @@ export const GUIDES: Guide[] = [
         category: 'Strategy',
         readTime: '9 min read',
         author: 'Polypulse Team',
-        keywords: ['sports prediction markets', 'nfl betting markets', 'nba prediction markets', 'super bowl odds', 'sports betting strategy', 'prediction market sports', 'kalshi sports markets']
+        keywords: ['sports prediction markets', 'nfl betting markets', 'nba prediction markets', 'super bowl odds', 'sports betting strategy', 'prediction market sports', 'kalshi sports markets', 'world cup betting']
     },
     {
         id: '7',
@@ -102,5 +102,38 @@ export const GUIDES: Guide[] = [
         readTime: '13 min read',
         author: 'Polypulse Team',
         keywords: ['news trading strategy', 'event driven trading', 'breaking news markets', 'fast money prediction markets', 'scalping prediction markets', 'market reaction analysis']
-    }
+    },
+    {
+        id: '10',
+        slug: 'best-prediction-markets-may-2026',
+        title: 'Top 10 Prediction Markets to Watch in Mid-2026',
+        description: 'Curated list of the highest-volume and most interesting prediction markets right now. Covers politics, sports, crypto, and global events with actionable analysis for each.',
+        category: 'Strategy',
+        imageUrl: '',
+        readTime: '10 min read',
+        author: 'Polypulse Team',
+        keywords: ['best prediction markets 2026', 'top polymarket markets', 'kalshi trending', 'election betting 2026', 'world cup prediction', 'fed rate betting', 'what to bet on prediction markets']
+    },
+    {
+        id: '11',
+        slug: 'tax-guide-prediction-markets',
+        title: 'Tax Guide for Prediction Market Winnings in 2026',
+        description: 'Everything you need to know about taxation on prediction market profits. Covers US capital gains, crypto tax implications, Kalshi 1099 forms, and international considerations.',
+        category: 'Basics',
+        imageUrl: '',
+        readTime: '12 min read',
+        author: 'Polypulse Team',
+        keywords: ['prediction market taxes', 'polymarket tax guide', 'kalshi tax implications', 'capital gains betting', 'crypto prediction market taxes', '1099 form kalshi', 'trading tax 2026']
+    },
+    {
+        id: '12',
+        slug: 'arbitrage-prediction-markets',
+        title: 'Arbitrage Opportunities Between Polymarket and Kalshi',
+        description: 'How to find and exploit price discrepancies between prediction market platforms. Includes real examples, risk assessment, and execution strategies for cross-platform arbitrage.',
+        category: 'Advanced',
+        imageUrl: '',
+        readTime: '16 min read',
+        author: 'Polypulse Team',
+        keywords: ['prediction market arbitrage', 'polymarket kalshi arbitrage', 'cross platform arbitrage', 'odds arbitrage', 'arbitrage trading strategy', 'prediction market price discrepancies']
+    },
 ];
