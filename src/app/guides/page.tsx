@@ -4,13 +4,13 @@ import GuidesContent from './GuidesContent';
 import { GUIDES } from '@/lib/guides';
 
 export const metadata: Metadata = {
-    title: 'Prediction Market Playbook – Expert Guides & Strategies',
+    title: 'Prediction Market Playbook - Expert Guides & Strategies',
     description: 'Master prediction markets with expert guides on election odds, crypto volatility, sports betting, risk management, and profitable trading strategies for Polymarket and Kalshi.',
     alternates: {
         canonical: 'https://www.polypulsenews.live/guides',
     },
     openGraph: {
-        title: 'Prediction Market Playbook – Expert Guides & Strategies',
+        title: 'Prediction Market Playbook - Expert Guides & Strategies',
         description: 'Master prediction markets with expert guides on election odds, crypto volatility, and profitable trading strategies.',
         type: 'website',
         url: 'https://www.polypulsenews.live/guides',
