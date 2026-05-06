@@ -66,7 +66,7 @@ export function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/guides" className="text-muted hover:text-primary transition-colors text-sm">
+                                <Link href="/about" className="text-muted hover:text-primary transition-colors text-sm">About</Link></li><li><Link href="/guides" className="text-muted hover:text-primary transition-colors text-sm">
                                     Guides
                                 </Link>
                             </li>
@@ -76,7 +76,7 @@ export function Footer() {
 
                 <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
                     <p className="text-muted text-xs">
-                        © {new Date().getFullYear()} PolypulseNews. All rights reserved.
+                        (C) {new Date().getFullYear()} PolypulseNews. All rights reserved.
                     </p>
                     <p className="text-muted text-xs">
                         Data provided for informational purposes only. Not financial advice.
