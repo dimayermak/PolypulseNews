@@ -55,7 +55,7 @@ export const metadata: Metadata = {
         locale: "en_US",
         images: [
             {
-                url: "/og-image.png",
+                url: "/og-image.svg",
                 width: 1200,
                 height: 630,
                 alt: "PolypulseNews â Prediction Market Intelligence",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
         title: "PolypulseNews â Prediction Market Intelligence",
         description: "Real-time prediction market data with correlated news insights",
         creator: "@PolypulseNews",
-        images: ["/og-image.png"],
+        images: ["/og-image.svg"],
     },
     icons: {
         icon: [
